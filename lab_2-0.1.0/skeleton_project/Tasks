@@ -1,0 +1,43 @@
+Tasks
+
+Components:
+    Add que
+    Status lights
+    
+
+
+Functions we must define:
+    emergencyStop()
+    addToQue()
+    removeFromQue()
+    clearQue()
+
+
+Functions already defined:
+    action:
+
+    get:
+        elevio_callButton()
+        
+    set:
+        elevio_doorOpenLamp()
+        elevio_floorIndicator()
+        elevio_stopLamp()
+
+
+Functions already implemented in main:
+    action:
+        elevio_init()
+        elevio_motorDirection()
+
+    get:
+        elevio_obstruction()
+        elevio_stopButton()
+        elevio_floorSensor()
+
+    set:
+        elevio_buttonLamp() #TODO,more implementations
+        elevio_stopLamp()
+
+
+
