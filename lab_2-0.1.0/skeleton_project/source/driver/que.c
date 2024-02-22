@@ -36,7 +36,7 @@ void insertInMidQue(Node* new, Node* head, MotorDirection motorDir, int destinat
         }
         iterationNode = iterationNode->next;
     }
-    //Adding as last if not 
+    //Adding as last if not within the final destinationlevel
     iterationNode->next = new;
 }
 
@@ -46,7 +46,7 @@ void insertInMidQue(Node* new, Node* head, MotorDirection motorDir, int destinat
 /// @param currentLevel The last activated sensor, elevator will be between here and floor given by direction
 /// @param head P2p to start of the que
 void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel, Node** head){
-    //TODO, consider if current Level is global variable
+    //TODO, add functionality for cabinbuttons
     Node* new = (Node*)malloc(sizeof(Node));
     new->floorLevel = pushedLevel;
     new->direction = dirPushed;
@@ -90,7 +90,6 @@ void removeFromQue(int removeLevel, Node** head){
     if(iterationNode->floorLevel == removeLevel){
         (*head) = iterationNode->next;
         free(iterationNode);
-        //TODO, deactivate all lights
     }
 
     Node* nextIt;
