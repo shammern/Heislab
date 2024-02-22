@@ -2,7 +2,7 @@
 
 
 #define N_FLOORS 4
-
+/// @brief enum for direction (-1down, 0-stop, 1-up)
 typedef enum { 
     DIRN_DOWN   = -1,
     DIRN_STOP   = 0,
@@ -11,7 +11,7 @@ typedef enum {
 
 
 #define N_BUTTONS 3
-
+/// @brief enum for types of button,(0-up, 1-down, 2-cabine)
 typedef enum { 
     BUTTON_HALL_UP      = 0,
     BUTTON_HALL_DOWN    = 1,
