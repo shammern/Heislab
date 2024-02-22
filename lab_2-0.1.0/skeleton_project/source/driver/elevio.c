@@ -12,6 +12,7 @@
 static int sockfd;
 static pthread_mutex_t sockmtx;
 
+/// @brief Initializing elevator and setting up communication with server
 void elevio_init(void){
     char ip[16] = "localhost";
     char port[8] = "15657";
@@ -43,14 +44,18 @@ void elevio_init(void){
 
 
 
-
+/// @brief Sends drive signal to socket
+/// @param dirn direction of movement of the elevator: up, down or stop, correspons to correct socketsignal
 void elevio_motorDirection(MotorDirection dirn){
     pthread_mutex_lock(&sockmtx);
     send(sockfd, (char[4]){1, dirn}, 4, 0);
     pthread_mutex_unlock(&sockmtx);
 }
 
-
+/// @brief Sends signal to control buttonlamps to socket
+/// @param floor location of button
+/// @param button Up, Down or Cabin-button
+/// @param value set_value of light (on/off)
 void elevio_buttonLamp(int floor, ButtonType button, int value){
     assert(floor >= 0);
     assert(floor < N_FLOORS);
@@ -62,7 +67,8 @@ void elevio_buttonLamp(int floor, ButtonType button, int value){
     pthread_mutex_unlock(&sockmtx);
 }
 
-
+/// @brief Send signal to socket to set floorlight
+/// @param floor last activated floorsensor
 void elevio_floorIndicator(int floor){
     assert(floor >= 0);
     assert(floor < N_FLOORS);
@@ -72,14 +78,16 @@ void elevio_floorIndicator(int floor){
     pthread_mutex_unlock(&sockmtx);
 }
 
-
+/// @brief Sending signal to socket, guard against door close active or not
+/// @param value status of obstruction switch
 void elevio_doorOpenLamp(int value){
     pthread_mutex_lock(&sockmtx);
     send(sockfd, (char[4]){4, value}, 4, 0);
     pthread_mutex_unlock(&sockmtx);
 }
 
-
+/// @brief Sending signal to socket stop has been activated or not
+/// @param value status of stop button,potentially if it has been activated? #TODO
 void elevio_stopLamp(int value){
     pthread_mutex_lock(&sockmtx);
     send(sockfd, (char[4]){5, value}, 4, 0);
@@ -88,7 +96,10 @@ void elevio_stopLamp(int value){
 
 
 
-
+/// @brief Checks status of button, renturns input signal from socket
+/// @param floor location of button
+/// @param button Up, Down or Cabin-button
+/// @return get_value of button (pressed or not) 
 int elevio_callButton(int floor, ButtonType button){
     pthread_mutex_lock(&sockmtx);
     send(sockfd, (char[4]){6, button, floor}, 4, 0);
@@ -98,7 +109,8 @@ int elevio_callButton(int floor, ButtonType button){
     return buf[1];
 }
 
-
+/// @brief Checks status of floor sensors
+/// @return floor at active sensor,otherwise -1
 int elevio_floorSensor(void){
     pthread_mutex_lock(&sockmtx);
     send(sockfd, (char[4]){7}, 4, 0);
@@ -108,7 +120,8 @@ int elevio_floorSensor(void){
     return buf[1] ? buf[2] : -1;
 }
 
-
+/// @brief Checks status of stop button 
+/// @return stop button pressed/not
 int elevio_stopButton(void){
     pthread_mutex_lock(&sockmtx);
     send(sockfd, (char[4]){8}, 4, 0);
@@ -118,7 +131,8 @@ int elevio_stopButton(void){
     return buf[1];
 }
 
-
+/// @brief Check status of obstruction sensor
+/// @return Sensor activated/not
 int elevio_obstruction(void){
     pthread_mutex_lock(&sockmtx);
     send(sockfd, (char[4]){9}, 4, 0);
