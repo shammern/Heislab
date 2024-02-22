@@ -1,5 +1,8 @@
 #include "que.h"
 
+/// @brief Helper for addToQue, iterates to last instance in que and adds new input
+/// @param  new the new node holding floorLevel and direction of button
+/// @param head pointer in linked list to iterate from
 void addLastInQue(Node* new, Node* head){
     Node* iteratorNode = head;
     while(iteratorNode->next !=  NULL){
@@ -8,6 +11,11 @@ void addLastInQue(Node* new, Node* head){
     iteratorNode->next = new;
 }
 
+/// @brief Helper for addToQue, checks if an order can be handled when the elevators takes its first ordered trip 
+/// @param  new the new node holding floorLevel and direction of button
+/// @param head pointer in linked list to iterate from
+/// @param motorDir the direction the elevator was first ordered "main mission"
+/// @param destinationLevel the next floor the elevator will stop at
 void insertInMidQue(Node* new, Node* head, MotorDirection motorDir, int destinationLevel){
     Node* iterationNode = head;
     ///beware that next node could be NULL, DO NOT remove while loop!
@@ -32,6 +40,11 @@ void insertInMidQue(Node* new, Node* head, MotorDirection motorDir, int destinat
     iterationNode->next = new;
 }
 
+/// @brief Function placing new inputs at the correct place in the que to maintain the intenden operation pattern
+/// @param pushedLevel Floor where a button were pushed
+/// @param dirPushed The direction the button was pushed
+/// @param currentLevel The last activated sensor, elevator will be between here and floor given by direction
+/// @param head P2p to start of the que
 void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel, Node** head){
     //TODO, consider if current Level is global variable
     Node* new = (Node*)malloc(sizeof(Node));
@@ -69,11 +82,15 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel, Node*
     }
 }
 
+/// @brief Function to remove all instances of a given floor level from the que (And frees the memory)
+/// @param removeLevel floor level to remove
+/// @param head P2p to start of que 
 void removeFromQue(int removeLevel, Node** head){
     Node* iterationNode = (*head);
     if(iterationNode->floorLevel == removeLevel){
         (*head) = iterationNode->next;
         free(iterationNode);
+        //TODO, deactivate all lights
     }
 
     Node* nextIt;
@@ -86,6 +103,8 @@ void removeFromQue(int removeLevel, Node** head){
     }
 }
 
+/// @brief Deletes all elements in que (And frees memory)
+/// @param head p2p start of que
 void clearQue(Node** head){
     Node* iterationNode = (*head);
     (*head) = NULL;
@@ -108,4 +127,4 @@ void clearQue(Node** head){
             ///If correct side of head node => insert
 
 ///Using this insert could lead to multiple instances of same floor,should not be a problem as long as both are removed at deletion
-
+///Have not considered that the elevator should start by going to the floor at first order
