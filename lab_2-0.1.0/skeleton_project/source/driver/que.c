@@ -10,7 +10,7 @@ void addLastInQue(Node* new, Node* head){
 
 void insertInMidQue(Node* new, Node* head, MotorDirection motorDir, int destinationLevel){
     Node* iterationNode = head;
-    ///beware that next node could be NULL, keep while loop
+    ///beware that next node could be NULL, DO NOT remove while loop!
     while(iterationNode->next != NULL){
         Node* next = iterationNode->next; 
         if(next->direction != motorDir){
@@ -54,7 +54,7 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel, Node*
             (*head) = new;
             return;
         }
-        insertInMiddle(new, head, DIRN_UP);
+        insertInMidQue(new, head, DIRN_UP, destinationLevel);
         return;
     }
 
@@ -63,7 +63,7 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel, Node*
             new->next = (*head);
             (*head) = new;
         }
-        insertInMiddle(new, head, DIRN_DOWN);
+        insertInMiddle(new, head, DIRN_DOWN, destinationLevel);
         return;
     }
 }
