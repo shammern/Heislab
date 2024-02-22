@@ -18,5 +18,5 @@ typedef struct{
 void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel, Node** head);
 void addLastInQue(Node* new, Node* head);
 void insertInMidQue(Node* new, Node* head, MotorDirection motorDir, int destinationLevel);
-void removeFromQue(int floor);//TODO, if head removed, set equal to NULL, beware memory leekage
-void clearQue(); //TODO, set head equal to NULL, beware memory leakage
+void removeFromQue(int fremoveLevel, Node** head);//TODO, if head removed, set equal to NULL, beware memory leekage
+void clearQue(Node** head); //TODO, set head equal to NULL, beware memory leakage

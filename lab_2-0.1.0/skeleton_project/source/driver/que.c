@@ -11,17 +11,18 @@ void addLastInQue(Node* new, Node* head){
 void insertInMidQue(Node* new, Node* head, MotorDirection motorDir, int destinationLevel){
     Node* iterationNode = head;
     ///beware that next node could be NULL, DO NOT remove while loop!
+    Node* nextIt;
     while(iterationNode->next != NULL){
-        Node* next = iterationNode->next; 
-        if(next->direction != motorDir){
+        nextIt = iterationNode->next;
+        if(nextIt->direction != motorDir){
             addLastInQue(new, iterationNode);
             return;
         }
         if(motorDir == DIRN_UP ? 
-        next->floorLevel < destinationLevel 
-        : next->floorLevel > destinationLevel)
+        nextIt->floorLevel < destinationLevel 
+        : nextIt->floorLevel > destinationLevel)
             {
-            new->next = next;
+            new->next = nextIt;
             iterationNode->next = new;
             return;
         }
@@ -67,6 +68,35 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel, Node*
         return;
     }
 }
+
+void removeFromQue(int removeLevel, Node** head){
+    Node* iterationNode = (*head);
+    if(iterationNode->floorLevel == removeLevel){
+        (*head) = iterationNode->next;
+        free(iterationNode);
+    }
+
+    Node* nextIt;
+    while(iterationNode->next != NULL){
+        nextIt = iterationNode->next; 
+        if(nextIt->floorLevel == removeLevel){
+            iterationNode->next = nextIt->next; //nextIt->next could be zero, but that is a non-issue
+            free(nextIt);
+        }      
+    }
+}
+
+void clearQue(Node** head){
+    Node* iterationNode = (*head);
+    (*head) = NULL;
+    Node* nextIt;
+    while(iterationNode != NULL){
+        nextIt =  iterationNode->next;
+        free(iterationNode);
+        iterationNode = nextIt;
+    }
+}
+
 ///Logic used in derivation of code:
 ///If greater than destination => Last node
 ///If opposite direction => Last node
@@ -76,4 +106,6 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel, Node*
         ///If correct side of head node=> first break/return
         ///while next direction align
             ///If correct side of head node => insert
+
+///Using this insert could lead to multiple instances of same floor,should not be a problem as long as both are removed at deletion
 
