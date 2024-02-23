@@ -1,11 +1,12 @@
 #include "que.h"
 #include "globalVariables.h"
 
+
 /// @brief Helper for addToQue, iterates to last instance in que and adds new input
 /// @param  new the new node holding floorLevel and direction of button
 /// @param head pointer in linked list to iterate from
-void addLastInQue(Node* new, Node* head){
-    Node* iteratorNode = head;
+void addLastInQue(Node* new, Node* prev){
+    Node* iteratorNode = prev;
     new ->next = NULL;
     while(iteratorNode->next !=  NULL){
         iteratorNode = iteratorNode->next;
@@ -18,8 +19,8 @@ void addLastInQue(Node* new, Node* head){
 /// @param head pointer in linked list to iterate from
 /// @param motorDir the direction the elevator was first ordered "main mission"
 /// @param destinationLevel the next floor the elevator will stop at
-void insertInMidQue(Node* new, Node* head, MotorDirection motorDir, int destinationLevel){
-    Node* iterationNode = head;
+void insertInMidQue(Node* new, MotorDirection motorDir, int destinationLevel){
+    Node* iterationNode = *head;
     ///beware that next node could be NULL, DO NOT remove while loop!
     Node* nextIt;
     while(iterationNode->next != NULL){
@@ -53,8 +54,8 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
     new->floorLevel = pushedLevel;
     new->direction = dirPushed;
 
-    if(*head == NULL){
-        (*head) = new;
+    if((*head) == NULL){
+        *head = new;
         new->next = NULL;
         return;
     }
@@ -72,7 +73,7 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
             (*head) = new;
             return;
         }
-        insertInMidQue(new, *head, DIRN_UP, destinationLevel);
+        insertInMidQue(new, DIRN_UP, destinationLevel);
         return;
     }
 
@@ -81,7 +82,7 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
             new->next = (*head);
             (*head) = new;
         }
-        insertInMidQue(new, *head, DIRN_DOWN, destinationLevel);
+        insertInMidQue(new, DIRN_DOWN, destinationLevel);
         return;
     }
     addLastInQue(new, (*head));
@@ -90,7 +91,7 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
 /// @brief Function to remove all instances of a given floor level from the que (And frees the memory)
 /// @param removeLevel floor level to remove
 /// @param head P2p to start of que 
-void removeFromQue(int removeLevel, Node** head){
+void removeFromQue(int removeLevel){
     Node* iterationNode = (*head);
     if(iterationNode->floorLevel == removeLevel){
         (*head) = iterationNode->next;
@@ -109,7 +110,7 @@ void removeFromQue(int removeLevel, Node** head){
 
 /// @brief Deletes all elements in que (And frees memory)
 /// @param head p2p start of que
-void clearQue(Node** head){
+void clearQue(){
     Node* iterationNode = (*head);
     (*head) = NULL;
     Node* nextIt;

@@ -1,16 +1,18 @@
 #include "que.h"
+#include "globalVariables.h"
 
-static const Node** head;
 
 int main(){
+    Node* dummy = NULL;
+    head = &dummy;
     Button button = initializeButton(DIRN_UP);
     int pushed = 3;
-    addToQue(pushed, button.type, 1, head);
+    addToQue(pushed, button.type, 1);
     pushed = 2;
-    addToQue(pushed, DIRN_DOWN, 1,&(head));
+    addToQue(pushed, DIRN_DOWN, 1);
     pushed = 2;
-    addToQue(pushed, button.type, 1,&(head));
-    removeFromQue(2, &(head));
+    addToQue(pushed, button.type, 1);
+    removeFromQue(2);
     return 0;
 }
 
