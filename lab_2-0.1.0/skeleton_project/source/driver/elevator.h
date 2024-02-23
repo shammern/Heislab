@@ -1,6 +1,9 @@
 #pragma once
+#include <stdlib.h>
+
 #include "elevio.h"
 #include "que.h"
+
 
 /// @brief Struct for Buttons, holding type and  status on/off 
 typedef struct{
@@ -16,7 +19,7 @@ typedef struct{
 
 typedef struct{
     Floor* floors;
-    Que que;
+    //Consider adding button up and down here, to keep information about direction in button
     MotorDirection volatile direction;
 }Elevator;
 

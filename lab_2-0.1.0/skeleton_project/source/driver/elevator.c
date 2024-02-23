@@ -22,9 +22,10 @@ Floor initializeFloors(int floorLevel, int topLevel, int lowestLevel){
 Elevator initializeElevator(){
     Elevator elevator;
     elevator.floors = malloc(N_FLOORS); 
-    *elevator.floors = initializeFloors(0,0,1);
+    Floor floor = initializeFloors(0,0,1);
+    elevator.floors = &floor;
     *(elevator.floors + N_FLOORS*sizeof(Floor)) = initializeFloors(N_FLOORS-1,1,0);
     for(int i = 1; i < N_FLOORS-1; i++){
-        Floor floor  = initializeFloors(i,0,0);
+        *(elevator.floors+sizeof(Floor)) = initializeFloors(i,0,0);///floor 
     }
 }
