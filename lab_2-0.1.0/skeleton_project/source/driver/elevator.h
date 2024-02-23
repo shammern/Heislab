@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "elevio.h"
+#include <time.h>
 #include "que.h"
 
 
@@ -21,9 +22,21 @@ typedef struct{
     Floor* floors;
     //Consider adding button up and down here, to keep information about direction in button
     MotorDirection volatile direction;
+    int volatile currentFloor;
 }Elevator;
+
+void driveElevator(Elevator *elev, int destination);
+void updateCurrentFloor(Elevator *elev);
+void updateMotorDirection(Elevator *elev, MotorDirection direction);
 
 Button initializeButton(ButtonType type);
 Floor initializeFloors(int floorLevel, int topLevel, int lowestLevel);
 Elevator initializeElevator();
+void freeMemory(Elevator *elev);
 
+
+
+
+void addToQue(int floor);
+void removeFromQue(int floor);
+void clearQue();
