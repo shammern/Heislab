@@ -1,11 +1,18 @@
 Tasks
+General
+    make global variables
+    Test que logic
+    implement everything in main
+    Find  out how to run the hardware properly
 
-Components:
-    Add que
-    Elevator
-        
-    Status lights
-    floor
+Components lacking:
+    Status lights -maybe just functions based on button status
+
+Components defined:
+    que
+    elevator
+    Floor
+    buttons
 
 
 Functions we must define:

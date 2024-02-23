@@ -36,7 +36,7 @@ void insertInMidQue(Node* new, Node* head, MotorDirection motorDir, int destinat
         }
         iterationNode = iterationNode->next;
     }
-    //Adding as last if not within the final destinationlevel
+    //Adding as last if not within the final destinationlevel in same direction
     iterationNode->next = new;
 }
 
@@ -77,7 +77,7 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel, Node*
             new->next = (*head);
             (*head) = new;
         }
-        insertInMiddle(new, head, DIRN_DOWN, destinationLevel);
+        insertInMidQue(new, head, DIRN_DOWN, destinationLevel);
         return;
     }
 }

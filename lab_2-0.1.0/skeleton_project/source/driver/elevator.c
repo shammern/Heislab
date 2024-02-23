@@ -30,6 +30,7 @@ Floor initializeFloors(int floorLevel, int topLevel, int lowestLevel){
 
 Elevator initializeElevator(){
     Elevator elevator;
+
     elevator.floors = malloc(sizeof(Floor)*N_FLOORS); 
 
     /*
