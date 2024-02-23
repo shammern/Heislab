@@ -18,7 +18,12 @@ typedef struct{
     Floor* floors;
     Que que;
     MotorDirection volatile direction;
+    int currentFloor;
 }Elevator;
+
+void driveElevator(Elevator elev, int destination);
+void updateCurrentFloor(Elevator elev);
+void updateMotorDirection(Elevator elev, MotorDirection direction);
 
 Button initializeButton(ButtonType type);
 Floor initializeFloors(int floorLevel, int topLevel, int lowestLevel);

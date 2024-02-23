@@ -1,5 +1,6 @@
 #include "elevator.h"
 
+
 Button initializeButton(ButtonType type){
     Button button;
     button.type = type;
@@ -27,4 +28,42 @@ Elevator initializeElevator(){
     for(int i = 1; i < N_FLOORS-1; i++){
         Floor floor  = initializeFloors(i,0,0);
     }
+    while(1){
+        elevio_motorDirection(DIRN_UP);
+        if(elevio_floorSensor() != -1){
+            elevio_motorDirection(DIRN_STOP);
+            break;
+        }
+    }
+    elevator.currentFloor = elevio_floorSensor();
+    elevator.direction = DIRN_STOP;
+    return elevator;
+}
+
+void driveElevator(Elevator elev, int destination){
+    if(destination < elev.currentFloor){
+        updateElevatorDirection(elev, DIRN_UP);
+        while(destination != elev.currentFloor){
+            elevio_motorDirection(DIRN_UP);
+            updateCurrentFloor(elev);
+        }
+        elevio_motorDirection(DIRN_STOP);
+    }
+
+    if(destination > elev.currentFloor){
+        updateElevatorDirection(elev, DIRN_DOWN);
+        while(destination != elev.currentFloor){
+            elevio_motorDirection(DIRN_DOWN);
+            updateCurrentFloor(elev);
+        }
+        elevio_motorDirection(DIRN_STOP);
+    }
+};
+
+void updateCurrentFloor(Elevator elev){
+    elev.currentFloor = elevio_floorSensor();
+}
+
+void updateElevatorDirection(Elevator elev, MotorDirection direction){
+    elev.direction = direction;
 }
