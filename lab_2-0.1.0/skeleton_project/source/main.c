@@ -4,7 +4,7 @@
 #include <time.h>
 #include "driver/elevio.h"
 #include "driver/elevator.h"
-#include "driver/elevio.con"
+//#include "driver/elevio.con"
 
 
 
@@ -14,9 +14,12 @@ int main(){
     printf("=== Example Program ===\n");
     printf("Press the stop button on the elevator panel to exit\n");
 
+    printf("Running function initializeElevator()\n");
     Elevator elev = initializeElevator();
-    driveElevator(elev, 2);
+    
 
+    printf("Running function driveElevator()\n");
+    driveElevator(&elev, 2);
 
     /*
     while(1){
@@ -51,8 +54,9 @@ int main(){
         
         nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);
     }
-
     */
 
+    
+    freeMemory(&elev);
     return 0;
 }
