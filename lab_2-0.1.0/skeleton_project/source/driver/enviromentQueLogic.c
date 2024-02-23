@@ -5,6 +5,8 @@ int main(){
     Button button = initializeButton(DIRN_UP);
     int pushed = 3;
     addToQue(pushed, button.type, 1, &(head));
+    pushed = 2;
+    addToQue(pushed, button.type, 1,&(head));
     
     return 0;
 }

@@ -26,6 +26,7 @@ Floor initializeFloors(int floorLevel, int topLevel, int lowestLevel){
     if(!lowestLevel){
         floor.down = initializeButton(BUTTON_HALL_DOWN);
     }
+    return floor;
 }
 
 Elevator initializeElevator(){

@@ -12,7 +12,7 @@ typedef struct Node Node;
 struct Node{
     int floorLevel;
     MotorDirection direction;
-    struct Node* next;
+    Node* next;
 };
 
 

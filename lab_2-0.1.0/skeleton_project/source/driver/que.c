@@ -51,11 +51,16 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel, Node*
     new->floorLevel = pushedLevel;
     new->direction = dirPushed;
 
+    if(*head == NULL){
+        (*head) = new;
+        new->next = NULL;
+        return;
+    }
     int destinationLevel = (*head)->floorLevel;
     MotorDirection motorDir = (*head)->direction;
 
-    int insertUp = (motorDir == DIRN_DOWN && currentLevel < destinationLevel) ? 1:0;
-    int insertDown = (motorDir == DIRN_UP && currentLevel > destinationLevel) ? 1:0;
+    int insertDown = (motorDir == DIRN_DOWN && currentLevel > destinationLevel) ? 1:0;
+    int insertUp = (motorDir == DIRN_UP && currentLevel < destinationLevel) ? 1:0;
 
     if(!insertUp && !insertDown){
         addLastInQue(new, (*head));

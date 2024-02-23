@@ -1,11 +1,12 @@
 { // See link for description https://code.visualstudio.com/docs/cpp/launch-json-reference 
     "version": "0.1.0",
     "configurations": [
+
 {
     "name": "Debug C 🐛",
     "type": "cppdbg",
     "request": "launch",
-    "program": "${workspaceFolder}/build/main.o", 
+    "program": "${workspaceFolder}/debug", 
     "args": [],
     "stopAtEntry": false,
     "cwd": "${workspaceFolder}",
