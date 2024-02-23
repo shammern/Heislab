@@ -68,7 +68,7 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel, Node*
             (*head) = new;
             return;
         }
-        insertInMidQue(new, head, DIRN_UP, destinationLevel);
+        insertInMidQue(new, *head, DIRN_UP, destinationLevel);
         return;
     }
 
@@ -77,7 +77,7 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel, Node*
             new->next = (*head);
             (*head) = new;
         }
-        insertInMidQue(new, head, DIRN_DOWN, destinationLevel);
+        insertInMidQue(new, *head, DIRN_DOWN, destinationLevel);
         return;
     }
 }

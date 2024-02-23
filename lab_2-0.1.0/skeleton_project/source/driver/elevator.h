@@ -1,8 +1,8 @@
 #pragma once
 #include <stdlib.h>
+#include <time.h>
 
 #include "elevio.h"
-#include <time.h>
 #include "que.h"
 
 
@@ -34,9 +34,3 @@ Floor initializeFloors(int floorLevel, int topLevel, int lowestLevel);
 Elevator initializeElevator();
 void freeMemory(Elevator *elev);
 
-
-
-
-void addToQue(int floor);
-void removeFromQue(int floor);
-void clearQue();
