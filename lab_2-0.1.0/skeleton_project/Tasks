@@ -2,8 +2,10 @@ Tasks
 
 Components:
     Add que
+    Elevator
+        
     Status lights
-    
+    floor
 
 
 Functions we must define:
