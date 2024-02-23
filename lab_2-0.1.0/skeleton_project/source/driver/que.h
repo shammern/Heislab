@@ -3,7 +3,7 @@
 
 #include "elevio.h"
 #include "elevator.h"
-
+/*
 /// @brief Linked list to 
 typedef struct{
     int floorLevel;
@@ -20,3 +20,5 @@ void addLastInQue(Node* new, Node* head);
 void insertInMidQue(Node* new, Node* head, MotorDirection motorDir, int destinationLevel);
 void removeFromQue(int fremoveLevel, Node** head);//TODO, if head removed, set equal to NULL, beware memory leekage
 void clearQue(Node** head); //TODO, set head equal to NULL, beware memory leakage
+
+*/

@@ -1,7 +1,7 @@
 #pragma once
 #include "elevio.h"
 #include <time.h>
-#include "que.h"
+//#include "que.h"
 
 /// @brief Struct for Buttons, holding type and  status on/off 
 typedef struct{
@@ -17,7 +17,7 @@ typedef struct{
 
 typedef struct{
     Floor* floors;
-    Que que;
+    //Que que;
     MotorDirection volatile direction;
     int volatile currentFloor;
 }Elevator;
@@ -30,6 +30,8 @@ Button initializeButton(ButtonType type);
 Floor initializeFloors(int floorLevel, int topLevel, int lowestLevel);
 Elevator initializeElevator();
 void freeMemory(Elevator *elev);
+
+void updateFloorLight(Elevator *elev);
 
 
 

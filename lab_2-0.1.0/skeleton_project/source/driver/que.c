@@ -1,5 +1,6 @@
 #include "que.h"
 
+/*
 /// @brief Helper for addToQue, iterates to last instance in que and adds new input
 /// @param  new the new node holding floorLevel and direction of button
 /// @param head pointer in linked list to iterate from
@@ -127,3 +128,5 @@ void clearQue(Node** head){
 
 ///Using this insert could lead to multiple instances of same floor,should not be a problem as long as both are removed at deletion
 ///Have not considered that the elevator should start by going to the floor at first order
+
+*/
