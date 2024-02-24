@@ -2,25 +2,64 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <time.h>
+#include <pthread.h>
 #include "driver/elevio.h"
 #include "driver/elevator.h"
 #include "driver/globalVariables.h"
+#include "driver/utilities.h"
 //#include "driver/elevio.con"
 
 
 
 int main(){
     //elevio_init();
-    
+
+    //Timer-functionality
+    int* doorReady;
+    pthread_t timerThread;
+    pthread_create(&timerThread, NULL, timerThreadFunction, doorReady);
+
     printf("=== Example Program ===\n");
     printf("Press the stop button on the elevator panel to exit\n");
 
-    printf("Running function initializeElevator()\n");
     elev = initializeElevator();
-    Elevator test = elev;
 
-    printf("Running function driveElevator()\n");
-    driveElevator(&elev, 2);
+    //Made to start timer at change
+    int currentFloor = elev.currentFloor;
+ 
+
+    while(1){
+        //At destination
+        if((*ptrToHead)->floorLevel == elev.currentFloor){
+            if(currentFloor != elev.currentFloor){
+
+                elevio_motorDirection(DIRN_STOP);
+                removeFromQue(elev.currentFloor);
+                for(int b = 0; b < N_BUTTONS; b++){
+                    changeButtonandLightStatus(elev.currentFloor, b, 0);
+                }  
+            }
+        }
+        if(1){//TODO
+            driveElevator();
+        }
+        
+        for(int f = 0; f < N_FLOORS; f++){
+            for(int b = 0; b < N_BUTTONS; b++){
+                int btnPressed = elevio_callButton(f, b);
+                if(btnPressed){
+                    changeButtonandLightStatus(f, b, 1);
+                    addToQue(f,b,elev.currentFloor);
+                }
+            }
+        }
+
+        currentFloor = elev.currentFloor;
+        updateCurrentFloor(); 
+    }
+    
+
+
 
     /*
     while(1){
@@ -59,6 +98,7 @@ int main(){
 
     
     freeMemory(&elev);
+    pthread_join(timerThread, NULL);
     return 0;
 }
 

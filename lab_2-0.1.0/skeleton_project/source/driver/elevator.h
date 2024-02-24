@@ -9,23 +9,24 @@
 /// @brief Struct for Buttons, holding type and  status on/off 
 typedef struct{
     ButtonType type;
-
-    int volatile status;
+    int volatile status; //TODO, consider remove struct if status is never needed
 }Button;
+//May add floor
 
 typedef struct{
     Button* upButtons;
     Button* downButtons;
-    //Consider adding button up and down here, to keep information about direction in button
+    Button* cabinButtons;
     MotorDirection volatile direction;
     int volatile currentFloor;
 }Elevator;
 
-void driveElevator(Elevator *elev, int destination);
-void updateCurrentFloor(Elevator *elev);
-void updateMotorDirection(Elevator *elev, MotorDirection direction);
+void driveElevator();
+void updateCurrentFloor();
+void changeButtonandLightStatus(int floor, ButtonType type,int status);
 
 Button initializeButton(ButtonType type);
 Elevator initializeElevator();
+
 void freeMemory(Elevator *elev);
 

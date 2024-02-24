@@ -2,12 +2,22 @@
 
 #include "globalVariables.h"
 #include "elevator.h"
-void updateCurrentFloor(Elevator *elev){
-    elev -> currentFloor = elevio_floorSensor();
+void updateCurrentFloor(){
+    if(elevio_floorSensor != -1){
+        elev.currentFloor = elevio_floorSensor();
+    }
 }
 
-void updateElevatorDirection(Elevator *elev, MotorDirection direction){
-    elev -> direction = direction;
+void changeButtonandLightStatus(int floor, ButtonType type, int status){
+    elevio_buttonLamp(floor, type, status);
+    if(type == DIRN_UP){
+        elev.upButtons[floor].status = status;
+        return;
+    }
+    else if(type == DIRN_UP){
+        elev.downButtons[floor].status = status;
+        return;
+    }
 }
 
 Button initializeButton(ButtonType type){
@@ -20,27 +30,19 @@ Button initializeButton(ButtonType type){
 Elevator initializeElevator(){
     Elevator elevator;
 
-    elevator.upButtons = malloc(sizeof(Button)*N_FLOORS);
-    elevator.downButtons = malloc(sizeof(Button)*N_FLOORS); 
-
-    /*
-    Floor floor = initializeFloors(0,0,1);
-    elevator.floors = &floor;
-    Floor lastFloor = initializeFloors(N_FLOORS-1,1,0);
-    *(elevator.floors + N_FLOORS*sizeof(Floor)) = lastFloor;
-    */
+    elevator.upButtons = malloc(sizeof(Button)*(N_FLOORS));
+    elevator.downButtons = malloc(sizeof(Button)*(N_FLOORS)); //Allocates extra slots, but helps us avoid offset in button order
 
     elevator.upButtons[0] = initializeButton(DIRN_UP);
     elevator.downButtons[N_FLOORS-1] = initializeButton(DIRN_DOWN);
 
     for(int i = 1; i < N_FLOORS-2; i++){
-        /*Floor floor = initializeFloors(i,0,0);
-        *(elevator.floors + i*sizeof(Floor)) = floor;
-        */
-       elevator.upButtons[i] = initializeButton(DIRN_UP);
-       elevator.downButtons[i] = initializeButton(DIRN_DOWN);
+        elevator.cabinButtons[i] = initializeButton(DIRN_STOP);
+        elevator.upButtons[i] = initializeButton(DIRN_UP);
+        elevator.downButtons[i] = initializeButton(DIRN_DOWN);
     }
 
+    //Takes care of out initiating routine
     while(1){
         elevio_motorDirection(DIRN_UP);
         if(elevio_floorSensor() != -1){
@@ -57,13 +59,17 @@ Elevator initializeElevator(){
     return elevator;
 }
 
-void driveElevator(Elevator *elev, int destination){
-    printf("Elevator running, current floor: %d\n", elev -> currentFloor);
-
+void driveElevator(){
+    printf("Elevator running, current floor: %d\n", elev.currentFloor);
+    if((*ptrToHead) == NULL){
+        elevio_motorDirection(DIRN_STOP);
+        return;
+    }
+    elevio_motorDirection((*ptrToHead)->direction);
+    /*
     //Code for running elevator upwards
-    if(destination > elev -> currentFloor){
-        
-        updateElevatorDirection(elev, DIRN_UP);
+    if(destination > elev.currentFloor){
+        elev.direction = destination;
         elevio_motorDirection(DIRN_UP);
         while(elev -> currentFloor != destination){
             updateCurrentFloor(elev);
@@ -72,9 +78,10 @@ void driveElevator(Elevator *elev, int destination){
             break;
             }
         }
-        elevio_motorDirection(DIRN_STOP);    
+        elevio_motorDirection(DIRN_STOP); 
+    
     }
-
+    
     //Code for running elevator downwards
     if(destination < elev -> currentFloor){
         updateElevatorDirection(elev, DIRN_DOWN);
@@ -88,9 +95,9 @@ void driveElevator(Elevator *elev, int destination){
         }
         elevio_motorDirection(DIRN_STOP);    
     }
-
-    
+        
     printf("Elevator has arrived at your destinationfloor: %d\n", destination);
+    */
 };
 
 void freeMemory(Elevator *elev){
