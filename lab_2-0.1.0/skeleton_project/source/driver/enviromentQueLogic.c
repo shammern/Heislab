@@ -1,19 +1,25 @@
 #include "que.h"
 #include "globalVariables.h"
 
+void settingGlobals(){
+    Node* head = NULL; // Pointer to Node
+    *ptrToHead = head; // Assign address of head to ptrToHead
+}
 
 int main(){
-    Node* head = NULL; // Pointer to Node
-    Node* const *ptrToConstHead = &head; // Constant pointer to a pointer to Node
-    *ptrToHead = head; // Assign address of head to ptrToHead
+    settingGlobals();
     Button button = initializeButton(DIRN_UP);
     int pushed = 3;
     addToQue(pushed, button.type, 1);
     pushed = 2;
+    
     addToQue(pushed, DIRN_DOWN, 1);
     pushed = 2;
+    Node** watch = ptrToHead;
     addToQue(pushed, button.type, 1);
-    removeFromQue(2);
+    //removeFromQue(2);
+    
+    
     return 0;
 }
 

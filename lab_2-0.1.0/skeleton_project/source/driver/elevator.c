@@ -1,6 +1,7 @@
-#include "elevator.h"
 #include <time.h>
 
+#include "globalVariables.h"
+#include "elevator.h"
 void updateCurrentFloor(Elevator *elev){
     elev -> currentFloor = elevio_floorSensor();
 }
@@ -105,4 +106,3 @@ void driveElevator(Elevator *elev, int destination){
 void freeMemory(Elevator *elev){
     free(elev->floors);
 }
-

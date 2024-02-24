@@ -53,7 +53,7 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
     Node* new = (Node*)malloc(sizeof(Node));
     new->floorLevel = pushedLevel;
     new->direction = dirPushed;
-    
+    Node** test = ptrToHead;
     if(*ptrToHead == NULL){
         *ptrToHead = new;
         new->next = NULL;
