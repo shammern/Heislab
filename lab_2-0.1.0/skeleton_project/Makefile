@@ -27,6 +27,7 @@ debug: $(OBJECTS)
 	@echo Compiling project with debug
 	$(COMPILER) -std=gnu99 -ggdb -Og -g3 $^ -o $@ $(LDFLAGS)
 
+redebug: clean debug
 
 
 ## executable depends on object files: link them

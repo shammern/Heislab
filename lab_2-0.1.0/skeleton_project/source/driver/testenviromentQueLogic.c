@@ -11,9 +11,8 @@ int main(){
     addToQue(pushed, DIRN_UP, 1);
     pushed = 3;
     addToQue(pushed, DIRN_UP, 1);
-    removeFromQue(2);
-    removeFromQue(3);
-    removeFromQue(4);
+    clearQue();
+    addToQue(pushed, DIRN_UP, 1);
     watch = ptrToHead;
     return 0;
 }
@@ -25,5 +24,5 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel, Node*
     OK add first
     OK void addLastInQue(Node* new, Node* head);
     OK void insertInMidQue(Node* new, Node* head, MotorDirection motorDir, int destinationLevel);
-void removeFromQue(int fremoveLevel, Node** head);
-void clearQue(Node** head); */
+OK void removeFromQue(int fremoveLevel, Node** head);
+OK void clearQue(Node** head); */
