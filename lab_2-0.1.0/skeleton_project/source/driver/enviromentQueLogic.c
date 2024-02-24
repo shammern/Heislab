@@ -8,18 +8,17 @@ void settingGlobals(){
 
 int main(){
     settingGlobals();
-    Button button = initializeButton(DIRN_UP);
-    int pushed = 3;
-    addToQue(pushed, button.type, 1);
-    pushed = 2;
-    
-    addToQue(pushed, DIRN_DOWN, 1);
+    int pushed = 4;
+    addToQue(pushed, DIRN_UP, 1);
     pushed = 2;
     Node** watch = ptrToHead;
-    addToQue(pushed, button.type, 1);
+    addToQue(pushed, DIRN_DOWN, 1);
+    pushed = 2;
+    addToQue(pushed, DIRN_UP, 1);
+    pushed = 3;
+    addToQue(pushed, DIRN_UP, 1);
     //removeFromQue(2);
-    
-    
+    watch = ptrToHead;
     return 0;
 }
 
@@ -27,7 +26,8 @@ int main(){
 ///Tests
 /*
 void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel, Node** head);
-void addLastInQue(Node* new, Node* head);
-void insertInMidQue(Node* new, Node* head, MotorDirection motorDir, int destinationLevel);
+    OK add first
+    OK void addLastInQue(Node* new, Node* head);
+    OK void insertInMidQue(Node* new, Node* head, MotorDirection motorDir, int destinationLevel);
 void removeFromQue(int fremoveLevel, Node** head);
 void clearQue(Node** head); */

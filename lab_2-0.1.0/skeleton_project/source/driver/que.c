@@ -30,8 +30,8 @@ void insertInMidQue(Node* new, MotorDirection motorDir, int destinationLevel){
             return;
         }
         if(motorDir == DIRN_UP ? 
-        nextIt->floorLevel < destinationLevel 
-        : nextIt->floorLevel > destinationLevel)
+        nextIt->floorLevel > iterationNode->floorLevel 
+        : nextIt->floorLevel < iterationNode->floorLevel)
             {
             new->next = nextIt;
             iterationNode->next = new;
@@ -53,36 +53,37 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
     Node* new = (Node*)malloc(sizeof(Node));
     new->floorLevel = pushedLevel;
     new->direction = dirPushed;
-    Node** test = ptrToHead;
+    
     if(*ptrToHead == NULL){
         *ptrToHead = new;
         new->next = NULL;
         return;
     }
-    int destinationLevel = (*ptrToHead)->floorLevel;
+    
     MotorDirection motorDir = (*ptrToHead)->direction;
 
     if(motorDir != dirPushed){
         addLastInQue(new, (*ptrToHead));
         return;
     }
-
-    if(motorDir == DIRN_UP && currentLevel < destinationLevel){
-        if(pushedLevel < destinationLevel){
+    int nextStopLevel = (*ptrToHead)->floorLevel;  //TODO, this might not be as intended, destination floor is now the next stop, not the uppest floor at which to stop
+    
+    if(motorDir == DIRN_UP && currentLevel < nextStopLevel){
+        if(pushedLevel < nextStopLevel){
             new->next = (*ptrToHead);
             (*ptrToHead) = new;
             return;
         }
-        insertInMidQue(new, DIRN_UP, destinationLevel);
+        insertInMidQue(new, DIRN_UP, nextStopLevel);
         return;
     }
 
-    if(motorDir == DIRN_DOWN && currentLevel > destinationLevel){
-        if(pushedLevel > destinationLevel){
+    if(motorDir == DIRN_DOWN && currentLevel > nextStopLevel){
+        if(pushedLevel > nextStopLevel){
             new->next = (*ptrToHead);
             (*ptrToHead) = new;
         }
-        insertInMidQue(new, DIRN_DOWN, destinationLevel);
+        insertInMidQue(new, DIRN_DOWN, nextStopLevel);
         return;
     }
     addLastInQue(new, (*ptrToHead));
