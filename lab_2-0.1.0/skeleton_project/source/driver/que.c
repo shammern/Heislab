@@ -4,7 +4,7 @@
 
 /// @brief Helper for addToQue, iterates to last instance in que and adds new input
 /// @param  new the new node holding floorLevel and direction of button
-/// @param head pointer in linked list to iterate from
+/// @param prev pointer in linked list to iterate from
 void addLastInQue(Node* new, Node* prev){
     Node* iteratorNode = prev;
     new ->next = NULL;
@@ -16,10 +16,8 @@ void addLastInQue(Node* new, Node* prev){
 
 /// @brief Helper for addToQue, checks if an order can be handled when the elevators takes its first ordered trip 
 /// @param  new the new node holding floorLevel and direction of button
-/// @param head pointer in linked list to iterate from
 /// @param motorDir the direction the elevator was first ordered "main mission"
-/// @param destinationLevel the next floor the elevator will stop at
-void insertInMidQue(Node* new, MotorDirection motorDir, int destinationLevel){
+void insertInMidQue(Node* new, MotorDirection motorDir){
     Node* iterationNode = *ptrToHead;
     ///beware that next node could be NULL, DO NOT remove while loop!
     Node* nextIt;
@@ -47,7 +45,6 @@ void insertInMidQue(Node* new, MotorDirection motorDir, int destinationLevel){
 /// @param pushedLevel Floor where a button were pushed
 /// @param dirPushed The direction the button was pushed
 /// @param currentLevel The last activated sensor, elevator will be between here and floor given by direction
-/// @param head P2p to start of the que
 void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
     //TODO, add functionality for cabinbuttons
     Node* new = (Node*)malloc(sizeof(Node));
@@ -55,8 +52,8 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
     new->direction = dirPushed;
     
     if(*ptrToHead == NULL){
-        *ptrToHead = new;
         new->next = NULL;
+        *ptrToHead = new;
         return;
     }
     
@@ -74,7 +71,7 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
             (*ptrToHead) = new;
             return;
         }
-        insertInMidQue(new, DIRN_UP, nextStopLevel);
+        insertInMidQue(new, DIRN_UP);
         return;
     }
 
@@ -83,7 +80,7 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
             new->next = (*ptrToHead);
             (*ptrToHead) = new;
         }
-        insertInMidQue(new, DIRN_DOWN, nextStopLevel);
+        insertInMidQue(new, DIRN_DOWN);
         return;
     }
     addLastInQue(new, (*ptrToHead));
