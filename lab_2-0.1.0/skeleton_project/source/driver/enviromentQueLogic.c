@@ -3,8 +3,9 @@
 
 
 int main(){
-    Node* dummy = NULL;
-    head = &dummy;
+    Node* head = NULL; // Pointer to Node
+    Node* const *ptrToConstHead = &head; // Constant pointer to a pointer to Node
+    *ptrToHead = head; // Assign address of head to ptrToHead
     Button button = initializeButton(DIRN_UP);
     int pushed = 3;
     addToQue(pushed, button.type, 1);

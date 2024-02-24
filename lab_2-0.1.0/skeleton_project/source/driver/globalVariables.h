@@ -2,5 +2,7 @@
 #include "que.h"
 #include "elevator.h"
 
-static const Node** head;
+static Node* dummy = NULL;
+static Node** const ptrToHead = &dummy;
+static const testGlobal = 1;
 static const Elevator* elevator; //TODO,may change this code
