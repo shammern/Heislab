@@ -94,5 +94,6 @@ void driveElevator(Elevator *elev, int destination){
 };
 
 void freeMemory(Elevator *elev){
-    free(elev->floors);
+    free(elev->upButtons);
+    free(elev->downButtons);
 }
