@@ -1,13 +1,7 @@
 #include "que.h"
 #include "globalVariables.h"
 
-void settingGlobals(){
-    Node* head = NULL; // Pointer to Node
-    *ptrToHead = head; // Assign address of head to ptrToHead
-}
-
 int main(){
-    settingGlobals();
     int pushed = 4;
     addToQue(pushed, DIRN_UP, 1);
     pushed = 2;
@@ -17,7 +11,9 @@ int main(){
     addToQue(pushed, DIRN_UP, 1);
     pushed = 3;
     addToQue(pushed, DIRN_UP, 1);
-    //removeFromQue(2);
+    removeFromQue(2);
+    removeFromQue(3);
+    removeFromQue(4);
     watch = ptrToHead;
     return 0;
 }
