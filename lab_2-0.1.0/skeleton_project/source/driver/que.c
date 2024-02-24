@@ -114,7 +114,6 @@ void removeFromQue(int removeLevel){
 }
 
 /// @brief Deletes all elements in que (And frees memory)
-/// @param head p2p start of que
 void clearQue(){
     Node* iterationNode = (*ptrToHead);
     (*ptrToHead) = NULL;
@@ -136,5 +135,4 @@ void clearQue(){
         ///while next direction align
             ///If correct side of head node => insert
 
-///Using this insert could lead to multiple instances of same floor,should not be a problem as long as both are removed at deletion
-///Have not considered that the elevator should start by going to the floor at first order
+///Using this insert could lead to multiple instances of same floor,should not be a problem as long as both are removed at deletion, which the are

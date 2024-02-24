@@ -4,19 +4,20 @@
 #include <time.h>
 #include "driver/elevio.h"
 #include "driver/elevator.h"
+#include "driver/globalVariables.h"
 //#include "driver/elevio.con"
 
 
 
 int main(){
-    elevio_init();
+    //elevio_init();
     
     printf("=== Example Program ===\n");
     printf("Press the stop button on the elevator panel to exit\n");
 
     printf("Running function initializeElevator()\n");
-    Elevator elev = initializeElevator();
-    
+    elev = initializeElevator();
+    Elevator test = elev;
 
     printf("Running function driveElevator()\n");
     driveElevator(&elev, 2);

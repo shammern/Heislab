@@ -15,11 +15,6 @@ struct Node{
     Node* next;
 };
 
-
-typedef struct{
-    Node* head;
-}Que;//TODO, consider removing, replace by a single global variable, are not supposed to have multiplisity
-
 void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel);
 void addLastInQue(Node* new, Node* prev);
 void insertInMidQue(Node* new, MotorDirection motorDir);

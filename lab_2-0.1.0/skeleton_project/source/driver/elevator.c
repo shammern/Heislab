@@ -17,23 +17,11 @@ Button initializeButton(ButtonType type){
     return button;
 }
 
-Floor initializeFloors(int floorLevel, int topLevel, int lowestLevel){
-    //assert(floorLevel >= 0 && floorLevel < N_FLOORS);
-    Floor floor;
-    floor.floorLevel = floorLevel;
-    if(!topLevel){
-        floor.up = initializeButton(BUTTON_HALL_UP);
-    }
-    if(!lowestLevel){
-        floor.down = initializeButton(BUTTON_HALL_DOWN);
-    }
-    return floor;
-}
-
 Elevator initializeElevator(){
     Elevator elevator;
 
-    elevator.floors = malloc(sizeof(Floor)*N_FLOORS); 
+    elevator.upButtons = malloc(sizeof(Button)*N_FLOORS);
+    elevator.downButtons = malloc(sizeof(Button)*N_FLOORS); 
 
     /*
     Floor floor = initializeFloors(0,0,1);
@@ -42,14 +30,15 @@ Elevator initializeElevator(){
     *(elevator.floors + N_FLOORS*sizeof(Floor)) = lastFloor;
     */
 
-    elevator.floors[0] = initializeFloors(0,0,1);
-    elevator.floors[N_FLOORS-1] = initializeFloors(N_FLOORS-1,1,0);
+    elevator.upButtons[0] = initializeButton(DIRN_UP);
+    elevator.downButtons[N_FLOORS-1] = initializeButton(DIRN_DOWN);
 
     for(int i = 1; i < N_FLOORS-2; i++){
         /*Floor floor = initializeFloors(i,0,0);
         *(elevator.floors + i*sizeof(Floor)) = floor;
         */
-       elevator.floors[i] = initializeFloors(i,0,0);
+       elevator.upButtons[i] = initializeButton(DIRN_UP);
+       elevator.downButtons[i] = initializeButton(DIRN_DOWN);
     }
 
     while(1){
@@ -59,6 +48,7 @@ Elevator initializeElevator(){
             break;
         }
     }
+
     elevator.currentFloor = elevio_floorSensor();
     elevator.direction = DIRN_STOP;
     printf("Elevator initilized, current floor: %d\n", elevator.currentFloor);

@@ -3,3 +3,4 @@
 #include "elevator.h"
 
 extern Node** const ptrToHead;
+extern Elevator elev;
