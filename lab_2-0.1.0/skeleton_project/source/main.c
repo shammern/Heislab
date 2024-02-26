@@ -51,7 +51,8 @@ int main(){
                 int btnPressed = elevio_callButton(f, b);
                 if(btnPressed){
                     changeButtonandLightStatus(f, b, 1);
-                    addToQue(f,b,elev.currentFloor);
+                    MotorDirection dir = buttonTypeToDir(b);
+                    addToQue(f,dir,elev.currentFloor);
                 }
             }
         }
