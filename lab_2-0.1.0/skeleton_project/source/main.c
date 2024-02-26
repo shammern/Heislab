@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <time.h>
-#include <pthread.h>
+//#include <pthread.h>
 #include "driver/elevio.h"
 #include "driver/elevator.h"
 #include "driver/globalVariables.h"
@@ -14,10 +14,9 @@
 int main(){
     //elevio_init();
 
-    //Timer-functionality
-    int* doorReady;
-    pthread_t timerThread;
-    pthread_create(&timerThread, NULL, timerThreadFunction, doorReady);
+    time_t startCountDoor;
+    time_t currentTime;
+    int doorBlocksDrive = 0;
 
     printf("=== Example Program ===\n");
     printf("Press the stop button on the elevator panel to exit\n");
@@ -32,7 +31,7 @@ int main(){
         //At destination
         if((*ptrToHead)->floorLevel == elev.currentFloor){
             if(currentFloor != elev.currentFloor){
-
+                time(&startCountDoor);
                 elevio_motorDirection(DIRN_STOP);
                 removeFromQue(elev.currentFloor);
                 for(int b = 0; b < N_BUTTONS; b++){
@@ -40,7 +39,9 @@ int main(){
                 }  
             }
         }
-        if(1){//TODO
+        time(&currentTime);
+        doorBlocksDrive = currentTime  >= startCountDoor + 3 ? 0 : 1; 
+        if(!doorBlocksDrive){
             driveElevator();
         }
         
@@ -98,7 +99,6 @@ int main(){
 
     
     freeMemory(&elev);
-    pthread_join(timerThread, NULL);
     return 0;
 }
 
