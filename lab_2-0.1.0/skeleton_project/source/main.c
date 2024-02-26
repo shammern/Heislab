@@ -12,7 +12,7 @@
 
 
 int main(){
-    //elevio_init();
+    elevio_init();
 
     time_t startCountDoor;
     time_t currentTime;
@@ -24,13 +24,12 @@ int main(){
     elev = initializeElevator();
 
     //Made to start timer at change
-    int currentFloor = elev.currentFloor;
-    Node** test = ptrToHead;
+    int previousFloor = elev.currentFloor;
 
     while(1){
         //At destination
         if(*ptrToHead != NULL && (*ptrToHead)->floorLevel == elev.currentFloor){
-            if(currentFloor != elev.currentFloor){
+            if(previousFloor != elev.currentFloor){
                 time(&startCountDoor);
                 elevio_motorDirection(DIRN_STOP);
                 removeFromQue(elev.currentFloor);
@@ -39,12 +38,14 @@ int main(){
                 }  
             }
         }
+        //Drives to nest in que if not waiting for the door
         time(&currentTime);
         doorBlocksDrive = currentTime  >= startCountDoor + 3 ? 0 : 1; 
         if(!doorBlocksDrive){
             driveElevator();
         }
         
+        //Checking all buttons, 
         for(int f = 0; f < N_FLOORS; f++){
             for(int b = 0; b < N_BUTTONS; b++){
                 int btnPressed = elevio_callButton(f, b);
@@ -54,14 +55,9 @@ int main(){
                 }
             }
         }
-
-        currentFloor = elev.currentFloor;
+        previousFloor = elev.currentFloor;
         updateCurrentFloor(); 
     }
-    
-
-
-
     /*
     while(1){
         int floor = elevio_floorSensor();
@@ -96,8 +92,6 @@ int main(){
         nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);
     }
     */
-
-    
     freeMemory(&elev);
     return 0;
 }
