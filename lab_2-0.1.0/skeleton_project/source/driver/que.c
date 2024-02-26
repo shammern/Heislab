@@ -81,7 +81,7 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
             (*ptrToHead) = new;
             return;
         }
-        insertInMidQue(new, DIRN_DOWN);
+        //insertInMidQue(new, DIRN_DOWN);
         return;
     }
     addLastInQue(new, (*ptrToHead));
@@ -95,8 +95,7 @@ void removeFromQue(int removeLevel){
     }
 
     Node* prevNode = *ptrToHead;
-    Node* iterationNode;
-    
+
     if(prevNode->floorLevel == removeLevel){
         (*ptrToHead) = prevNode->next;
         Node* temp = prevNode;
@@ -104,20 +103,22 @@ void removeFromQue(int removeLevel){
         prevNode = *ptrToHead;
     }
 
-    iterationNode = prevNode->next;
-
-    while(iterationNode != NULL){
-        if(iterationNode->floorLevel == removeLevel){
-            prevNode->next = iterationNode->next; //nextIt->next could be zero, but that is a non-issue
-            Node* temp  = iterationNode;
-            iterationNode = iterationNode ->next;
-            free(temp);
+    if(prevNode != NULL){
+        Node* iterationNode = prevNode->next;
+        while(iterationNode != NULL){
+            if(iterationNode->floorLevel == removeLevel){
+                prevNode->next = iterationNode->next; //nextIt->next could be zero, but that is a non-issue
+                Node* temp  = iterationNode;
+                iterationNode = iterationNode ->next;
+                free(temp);
+            }
+            else{
+                prevNode = iterationNode;
+                iterationNode = iterationNode-> next;
+            }     
         }
-        else{
-            prevNode = iterationNode;
-            iterationNode = iterationNode-> next;
-        }     
     }
+
 }
 
 /// @brief Deletes all elements in que (And frees memory)

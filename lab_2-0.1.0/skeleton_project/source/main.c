@@ -58,7 +58,7 @@ int main(){
         }
         if(indicatedFloor != -1){
             prevFloor = elev.currentFloor;
-            printf("Current elevatorfloor is: %d\n", prevFloor);
+            //printf("Current elevatorfloor is: %d\n", prevFloor);
         }
 
         updateCurrentFloor(&elev);
@@ -74,7 +74,7 @@ int main(){
         if(floor == 0){
             elevio_motorDirection(DIRN_UP);
         }
-
+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
         if(floor == N_FLOORS-1){
     time_t startCountDoor;
     time_t currentTime;

@@ -53,6 +53,14 @@ Elevator initializeElevator(){
         }
     }
 
+    
+    for(int f = 0; f < N_FLOORS; f++){
+        for(int b = 0; b < N_BUTTONS; b++){
+            changeButtonandLightStatus(f, b, 0, &elevator);
+        }
+    }
+    
+
     elevator.currentFloor = elevio_floorSensor();
     elevator.direction = DIRN_STOP;
     printf("Elevator initilized, current floor: %d\n", elevator.currentFloor);
