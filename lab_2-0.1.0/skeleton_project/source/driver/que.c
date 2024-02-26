@@ -98,7 +98,6 @@ void removeFromQue(int removeLevel){
         prevNode = *ptrToHead;
     }
 
-
     while(iterationNode != NULL){
         if(iterationNode->floorLevel == removeLevel){
             prevNode->next = iterationNode->next; //nextIt->next could be zero, but that is a non-issue

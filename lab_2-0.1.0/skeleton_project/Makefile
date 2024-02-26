@@ -1,7 +1,7 @@
 EXECUTABLE  = elevator
 
 COMPILER    = gcc #Change to clang if experiencing issues
-CFLAGS      = -Wall -g -std=gnu11 -fsanitize=address #Changed from snu11
+CFLAGS      = -Wall -g -std=gnu11 -fsanitize=address #Changed from gnu11
 LDFLAGS     = -fsanitize=address
 EXCLUDE     = '*test*'
 
