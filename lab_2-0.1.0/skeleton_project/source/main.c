@@ -21,42 +21,47 @@ int main(){
     printf("=== Example Program ===\n");
     printf("Press the stop button on the elevator panel to exit\n");
 
-    elev = initializeElevator();
+    Elevator elev = initializeElevator();
+    //Elevator* elev = &elevator;
 
     //Made to start timer at change
-    int currentFloor = elev.currentFloor;
+    int prevFloor = elev.currentFloor;
+    int indicatedFloor = elev.currentFloor;
     Node** test = ptrToHead;
 
     while(1){
         //At destination
         if(*ptrToHead != NULL && (*ptrToHead)->floorLevel == elev.currentFloor){
-            if(currentFloor != elev.currentFloor){
+            if(prevFloor != elev.currentFloor){
                 time(&startCountDoor);
                 elevio_motorDirection(DIRN_STOP);
                 removeFromQue(elev.currentFloor);
                 for(int b = 0; b < N_BUTTONS; b++){
-                    changeButtonandLightStatus(elev.currentFloor, b, 0);
+                    changeButtonandLightStatus(elev.currentFloor, b, 0, &elev);
                 }  
             }
         }
         time(&currentTime);
         doorBlocksDrive = currentTime  >= startCountDoor + 3 ? 0 : 1; 
-        if(!doorBlocksDrive){
-            driveElevator();
+        if(1){ //!doorBlocksDrive
+            driveElevator(&elev);
         }
         
         for(int f = 0; f < N_FLOORS; f++){
             for(int b = 0; b < N_BUTTONS; b++){
                 int btnPressed = elevio_callButton(f, b);
                 if(btnPressed){
-                    changeButtonandLightStatus(f, b, 1);
+                    changeButtonandLightStatus(f, b, 1, &elev);
                     addToQue(f,b,elev.currentFloor);
                 }
             }
         }
+        if(indicatedFloor != -1){
+            prevFloor = elev.currentFloor;
+            printf("Current elevatorfloor is: %d\n", prevFloor);
+        }
 
-        currentFloor = elev.currentFloor;
-        updateCurrentFloor(); 
+        updateCurrentFloor(&elev);
     }
     
 
@@ -97,7 +102,7 @@ int main(){
     */
 
     
-    freeMemory(&elev);
+    //freeMemory(&elev);
     return 0;
 }
 

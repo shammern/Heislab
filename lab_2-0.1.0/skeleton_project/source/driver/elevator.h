@@ -14,16 +14,16 @@ typedef struct{
 //May add floorLevel
 
 typedef struct{
-    Button* upButtons;
-    Button* downButtons;
-    Button* cabinButtons;
+    Button upButtons[N_FLOORS];
+    Button downButtons[N_FLOORS];
+    Button cabinButtons[N_FLOORS];
     MotorDirection volatile direction;
     int volatile currentFloor;
 }Elevator;
 
-void driveElevator();
-void updateCurrentFloor();
-void changeButtonandLightStatus(int floor, ButtonType type,int status);
+void driveElevator(Elevator* elev);
+void updateCurrentFloor(Elevator* elev);
+void changeButtonandLightStatus(int floor, ButtonType type,int status, Elevator* elev);
 
 Button initializeButton(ButtonType type);
 Elevator initializeElevator();

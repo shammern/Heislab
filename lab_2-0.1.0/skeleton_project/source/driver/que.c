@@ -90,14 +90,21 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
 /// @brief Function to remove all instances of a given floor level from the que (And frees the memory)
 /// @param removeLevel floor level to remove
 void removeFromQue(int removeLevel){
+    if(*ptrToHead == NULL){
+        return;
+    }
+
     Node* prevNode = *ptrToHead;
-    Node* iterationNode = prevNode->next;
+    Node* iterationNode;
     
     if(prevNode->floorLevel == removeLevel){
         (*ptrToHead) = prevNode->next;
-        free(prevNode);
+        Node* temp = prevNode;
+        free(temp);
         prevNode = *ptrToHead;
     }
+
+    iterationNode = prevNode->next;
 
     while(iterationNode != NULL){
         if(iterationNode->floorLevel == removeLevel){
