@@ -12,7 +12,7 @@
 
 
 int main(){
-    //elevio_init();
+    elevio_init();
 
     time_t startCountDoor;
     time_t currentTime;
@@ -71,11 +71,10 @@ int main(){
         }
 
         if(floor == N_FLOORS-1){
-            elevio_motorDirection(DIRN_DOWN);
-        }
+    time_t startCountDoor;
+    time_t currentTime;
+    int doorBlocksDrive = 0;
 
-
-        for(int f = 0; f < N_FLOORS; f++){
             for(int b = 0; b < N_BUTTONS; b++){
                 int btnPressed = elevio_callButton(f, b);
                 elevio_buttonLamp(f, b, btnPressed); //TODO, implement hold on light after button released

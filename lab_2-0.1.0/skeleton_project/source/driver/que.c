@@ -63,9 +63,9 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
         addLastInQue(new, (*ptrToHead));
         return;
     }
-    int nextStopLevel = (*ptrToHead)->floorLevel;  //TODO, this might not be as intended, destination floor is now the next stop, not the uppest floor at which to stop
+    int nextStopLevel = (*ptrToHead)->floorLevel;
     
-    if(motorDir == DIRN_UP && currentLevel < nextStopLevel){
+    if(motorDir == DIRN_UP){
         if(pushedLevel < nextStopLevel){
             new->next = (*ptrToHead);
             (*ptrToHead) = new;
@@ -75,10 +75,11 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
         return;
     }
 
-    if(motorDir == DIRN_DOWN && currentLevel > nextStopLevel){
+    if(motorDir == DIRN_DOWN){
         if(pushedLevel > nextStopLevel){
             new->next = (*ptrToHead);
             (*ptrToHead) = new;
+            return;
         }
         insertInMidQue(new, DIRN_DOWN);
         return;

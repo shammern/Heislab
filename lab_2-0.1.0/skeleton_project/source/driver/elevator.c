@@ -54,8 +54,7 @@ Elevator initializeElevator(){
     elevator.currentFloor = elevio_floorSensor();
     elevator.direction = DIRN_STOP;
     printf("Elevator initilized, current floor: %d\n", elevator.currentFloor);
-    nanosleep(&(struct timespec){0, 10*1000*1000}, NULL);
-    printf("Elevator done sleeping\n");
+    
     return elevator;
 }
 
