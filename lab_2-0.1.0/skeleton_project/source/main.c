@@ -25,11 +25,11 @@ int main(){
 
     //Made to start timer at change
     int currentFloor = elev.currentFloor;
- 
+    Node** test = ptrToHead;
 
     while(1){
         //At destination
-        if((*ptrToHead)->floorLevel == elev.currentFloor){
+        if(*ptrToHead != NULL && (*ptrToHead)->floorLevel == elev.currentFloor){
             if(currentFloor != elev.currentFloor){
                 time(&startCountDoor);
                 elevio_motorDirection(DIRN_STOP);

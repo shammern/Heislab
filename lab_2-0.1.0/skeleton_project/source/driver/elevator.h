@@ -11,7 +11,7 @@ typedef struct{
     ButtonType type;
     int volatile status; //TODO, consider remove struct if status is never needed
 }Button;
-//May add floor
+//May add floorLevel
 
 typedef struct{
     Button* upButtons;
