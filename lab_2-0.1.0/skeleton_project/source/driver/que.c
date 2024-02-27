@@ -49,7 +49,8 @@ void insertInMidQue(Node* new, MotorDirection motorDir){
 /// @param dirPushed The direction the button was pushed
 /// @param currentLevel The last activated sensor, elevator will be between here and floor given by direction
 void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
-    if(pushedLevel == currentLevel){
+    if(pushedLevel == currentLevel
+    || (*ptrToHead) != NULL && pushedLevel == (*ptrToHead)->floorLevel && dirPushed == (*ptrToHead)->direction){
         return;
     }
     //TODO, add functionality for cabinbuttons
