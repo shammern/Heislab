@@ -18,6 +18,9 @@ void addLastInQue(Node* new, Node* prev){
 /// @param  new the new node holding floorLevel and direction of button
 /// @param motorDir the direction the elevator was first ordered "main mission"
 void insertInMidQue(Node* new, MotorDirection motorDir){
+    if(*ptrToHead == NULL){
+        return;
+    }
     Node* iterationNode = *ptrToHead;
     ///beware that next node could be NULL, DO NOT remove while loop!
     Node* nextIt;
@@ -46,13 +49,16 @@ void insertInMidQue(Node* new, MotorDirection motorDir){
 /// @param dirPushed The direction the button was pushed
 /// @param currentLevel The last activated sensor, elevator will be between here and floor given by direction
 void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
+    if(pushedLevel == currentLevel){
+        return;
+    }
     //TODO, add functionality for cabinbuttons
     Node* new = (Node*)malloc(sizeof(Node));
     new->floorLevel = pushedLevel;
     new->direction = dirPushed;
+    new->next = NULL;
     
     if(*ptrToHead == NULL){
-        new->next = NULL;
         *ptrToHead = new;
         return;
     }
@@ -97,13 +103,18 @@ void removeFromQue(int removeLevel){
     Node* prevNode = *ptrToHead;
 
     if(prevNode->floorLevel == removeLevel){
+        if(prevNode->next == NULL){
+            free(prevNode);
+            (*ptrToHead) = NULL;
+            return;
+        }
         (*ptrToHead) = prevNode->next;
         Node* temp = prevNode;
         free(temp);
         prevNode = *ptrToHead;
     }
 
-    if(prevNode != NULL){
+    if(prevNode->next != NULL){
         Node* iterationNode = prevNode->next;
         while(iterationNode != NULL){
             if(iterationNode->floorLevel == removeLevel){

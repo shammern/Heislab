@@ -35,13 +35,13 @@ Elevator initializeElevator(){
     //elevator.upButtons = malloc(sizeof(Button)*(N_FLOORS));
     //elevator.downButtons = malloc(sizeof(Button)*(N_FLOORS)); //Allocates extra slots, but helps us avoid offset in button order
 
-    elevator.upButtons[0] = initializeButton(DIRN_UP);
-    elevator.downButtons[N_FLOORS-1] = initializeButton(DIRN_DOWN);
+    elevator.upButtons[0] = initializeButton(BUTTON_HALL_UP);
+    elevator.downButtons[N_FLOORS-1] = initializeButton(BUTTON_HALL_DOWN);
 
     for(int i = 1; i < N_FLOORS-2; i++){
-        elevator.cabinButtons[i] = initializeButton(DIRN_STOP);
-        elevator.upButtons[i] = initializeButton(DIRN_UP);
-        elevator.downButtons[i] = initializeButton(DIRN_DOWN);
+        elevator.cabinButtons[i] = initializeButton(BUTTON_CAB);
+        elevator.upButtons[i] = initializeButton(BUTTON_HALL_UP);
+        elevator.downButtons[i] = initializeButton(BUTTON_HALL_DOWN);
     }
 
     //Takes care of out initiating routine
