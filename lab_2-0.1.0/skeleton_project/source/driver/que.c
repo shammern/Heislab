@@ -63,9 +63,9 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
         addLastInQue(new, (*ptrToHead));
         return;
     }
-    int nextStopLevel = (*ptrToHead)->floorLevel;  //TODO, this might not be as intended, destination floor is now the next stop, not the uppest floor at which to stop
+    int nextStopLevel = (*ptrToHead)->floorLevel;
     
-    if(motorDir == DIRN_UP && currentLevel < nextStopLevel){
+    if(motorDir == DIRN_UP){
         if(pushedLevel < nextStopLevel){
             new->next = (*ptrToHead);
             (*ptrToHead) = new;
@@ -75,12 +75,13 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
         return;
     }
 
-    if(motorDir == DIRN_DOWN && currentLevel > nextStopLevel){
+    if(motorDir == DIRN_DOWN){
         if(pushedLevel > nextStopLevel){
             new->next = (*ptrToHead);
             (*ptrToHead) = new;
+            return;
         }
-        insertInMidQue(new, DIRN_DOWN);
+        //insertInMidQue(new, DIRN_DOWN);
         return;
     }
     addLastInQue(new, (*ptrToHead));
@@ -89,27 +90,35 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
 /// @brief Function to remove all instances of a given floor level from the que (And frees the memory)
 /// @param removeLevel floor level to remove
 void removeFromQue(int removeLevel){
+    if(*ptrToHead == NULL){
+        return;
+    }
+
     Node* prevNode = *ptrToHead;
-    Node* iterationNode = prevNode->next;
-    
+
     if(prevNode->floorLevel == removeLevel){
         (*ptrToHead) = prevNode->next;
-        free(prevNode);
+        Node* temp = prevNode;
+        free(temp);
         prevNode = *ptrToHead;
     }
 
-    while(iterationNode != NULL){
-        if(iterationNode->floorLevel == removeLevel){
-            prevNode->next = iterationNode->next; //nextIt->next could be zero, but that is a non-issue
-            Node* temp  = iterationNode;
-            iterationNode = iterationNode ->next;
-            free(temp);
+    if(prevNode != NULL){
+        Node* iterationNode = prevNode->next;
+        while(iterationNode != NULL){
+            if(iterationNode->floorLevel == removeLevel){
+                prevNode->next = iterationNode->next; //nextIt->next could be zero, but that is a non-issue
+                Node* temp  = iterationNode;
+                iterationNode = iterationNode ->next;
+                free(temp);
+            }
+            else{
+                prevNode = iterationNode;
+                iterationNode = iterationNode-> next;
+            }     
         }
-        else{
-            prevNode = iterationNode;
-            iterationNode = iterationNode-> next;
-        }     
     }
+
 }
 
 /// @brief Deletes all elements in que (And frees memory)
