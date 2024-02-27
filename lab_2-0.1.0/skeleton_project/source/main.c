@@ -15,6 +15,7 @@ int main(){
 
     time_t startCountDoor;
     time_t currentTime;
+    time(&startCountDoor);
     int doorBlocksDrive = 0;
 
     printf("=== Example Program ===\n");
@@ -26,7 +27,6 @@ int main(){
     //Made to start timer at change
 
     int prevFloor = elev.currentFloor;
-    int indicatedFloor = elev.currentFloor;
     Node** test = ptrToHead;
 
 
@@ -45,7 +45,7 @@ int main(){
         //Drives to nest in que if not waiting for the door
         time(&currentTime);
         doorBlocksDrive = currentTime  >= startCountDoor + 3 ? 0 : 1; 
-        if(1){ //!doorBlocksDrive
+        if(!doorBlocksDrive){ //!doorBlocksDrive
             if(*ptrToHead != NULL && elev.currentFloor == (*ptrToHead)->floorLevel){
                 removeFromQue(elev.currentFloor);
             }
@@ -64,16 +64,21 @@ int main(){
         }
 
         if(elevio_stopButton()){
-        elevio_motorDirection(DIRN_STOP);
-        time(&startCountDoor);
-        }
-        
-        if(indicatedFloor != -1){
-            prevFloor = elev.currentFloor;
-            //printf("Current elevatorfloor is: %d\n", prevFloor);
+            elevio_motorDirection(DIRN_STOP);
+            time(&startCountDoor);
         }
 
+        //Obstruction light
+        if(elevio_obstruction()){
+            elevio_stopLamp(1);
+        } else {
+            elevio_stopLamp(0);
+        }
+        
+        
+
         updateCurrentFloor(&elev);
+        elevio_floorIndicator(elev.currentFloor);
     }
     
 
@@ -98,12 +103,6 @@ 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
             }
         }
 
-        //Obstruction light
-        if(elevio_obstruction()){
-            elevio_stopLamp(1);
-        } else {
-            elevio_stopLamp(0);
-        }
         
         //Checking all buttons, 
         for(int f = 0; f < N_FLOORS; f++){
