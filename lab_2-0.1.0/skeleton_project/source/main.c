@@ -71,6 +71,7 @@ int main(){
         //Obstruction light
         if(elevio_obstruction()){
             elevio_stopLamp(1);
+            time(&startCountDoor); //Is this according to spec? now it is waiting three seconds after obstruction
         } else {
             elevio_stopLamp(0);
         }
