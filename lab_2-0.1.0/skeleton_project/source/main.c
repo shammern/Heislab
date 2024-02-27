@@ -13,6 +13,7 @@
 int main(){
     elevio_init();
 
+    //Made to start timer
     time_t startCountDoor;
     time_t currentTime;
     time(&startCountDoor);
@@ -22,9 +23,6 @@ int main(){
     printf("Press the stop button on the elevator panel to exit\n");
 
     Elevator elev = initializeElevator();
-    //Elevator* elev = &elevator;
-
-    //Made to start timer at change
 
     int prevFloor = elev.currentFloor;
     Node** test = ptrToHead;
@@ -42,10 +40,9 @@ int main(){
                 }  
             }
         }
+
         //Drives to nest in que if not waiting for the door
-        time(&currentTime);
-        doorBlocksDrive = currentTime  >= startCountDoor + 3 ? 0 : 1; 
-        if(!doorBlocksDrive){ //!doorBlocksDrive
+        if(time(&currentTime) >= startCountDoor + 3){ 
             if(*ptrToHead != NULL && elev.currentFloor == (*ptrToHead)->floorLevel){
                 removeFromQue(elev.currentFloor);
             }
@@ -56,7 +53,7 @@ int main(){
             for(int b = 0; b < N_BUTTONS; b++){
                 int btnPressed = elevio_callButton(f, b);
                 if(btnPressed){
-                    MotorDirection dir = buttonTypeToDir(b);
+                    MotorDirection dir = buttonTypeToDir(b, f, &elev);
                     changeButtonandLightStatus(f, b, 1, &elev);
                     addToQue(f,dir,elev.currentFloor);
                 }
@@ -75,8 +72,6 @@ int main(){
         } else {
             elevio_stopLamp(0);
         }
-        
-        
 
         updateCurrentFloor(&elev);
         elevio_floorIndicator(elev.currentFloor);
