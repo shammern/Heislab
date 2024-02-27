@@ -2,11 +2,13 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <time.h>
+
 #include "driver/elevio.h"
-#include "driver/elevator.h"
-#include "driver/globalVariables.h"
-#include "driver/utilities.h"
-//#include "driver/elevio.con"
+#include "elevator.h"
+#include "globalVariables.h"
+#include "utilities.h"
+#include "que.h"
+
 
 
 
@@ -82,46 +84,11 @@ int main(){
 
     /*
     while(1){
-        int floor = elevio_floorSensor();
 
-        if(floor == 0){
-            elevio_motorDirection(DIRN_UP);
-        }
-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
-        if(floor == N_FLOORS-1){
-    time_t startCountDoor;
-    time_t currentTime;
-    int doorBlocksDrive = 0;
-
-            for(int b = 0; b < N_BUTTONS; b++){
-                int btnPressed = elevio_callButton(f, b);
-                elevio_buttonLamp(f, b, btnPressed); //TODO, implement hold on light after button released
-            }
-        }
-
-        
-        //Checking all buttons, 
-        for(int f = 0; f < N_FLOORS; f++){
-            for(int b = 0; b < N_BUTTONS; b++){
-                int btnPressed = elevio_callButton(f, b);
-                if(btnPressed){
-                    changeButtonandLightStatus(f, b, 1);
-                    MotorDirection dir = buttonTypeToDir(b);
-                    addToQue(f,dir,elev.currentFloor);
-                }
-            }
-        }
-        previousFloor = elev.currentFloor;
-        updateCurrentFloor(); 
-    }
-    /*
-    while(1){
-        nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);
-    }
-    */
 
     
     //freeMemory(&elev);
     return 0;
+    */
 }
 

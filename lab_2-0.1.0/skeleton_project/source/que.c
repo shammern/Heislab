@@ -1,7 +1,6 @@
 #include "que.h"
 #include "globalVariables.h"
 
-
 /// @brief Helper for addToQue, iterates to last instance in que and adds new input
 /// @param  new the new node holding floorLevel and direction of button
 /// @param prev pointer in linked list to iterate from

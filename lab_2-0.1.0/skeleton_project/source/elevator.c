@@ -1,7 +1,6 @@
-#include <time.h>
-
-#include "globalVariables.h"
 #include "elevator.h"
+#include "globalVariables.h"
+
 void updateCurrentFloor(Elevator* elev){
     if(elevio_floorSensor() != -1){
         elev->currentFloor = elevio_floorSensor();

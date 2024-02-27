@@ -2,9 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "elevio.h"
-#include "que.h"
-
+#include "driver/elevio.h"
 
 /// @brief Struct for Buttons, holding type and  status on/off 
 typedef struct{
