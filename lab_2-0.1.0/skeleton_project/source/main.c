@@ -18,8 +18,9 @@ int main(){
     //Made to start timer
     time_t startCountDoor;
     time_t currentTime;
+    time_t stopButtonTime;
     time(&startCountDoor);
-    int doorBlocksDrive = 0;
+    int stopWasActive = 0;
 
     printf("=== Example Program ===\n");
     printf("Press the stop button on the elevator panel to exit\n");
@@ -35,6 +36,7 @@ int main(){
         if(*ptrToHead != NULL && (*ptrToHead)->floorLevel == elev.currentFloor){
             if(prevFloor != elev.currentFloor){
                 time(&startCountDoor);
+                elevio_doorOpenLamp(1);
                 elevio_motorDirection(DIRN_STOP);
                 removeFromQue(elev.currentFloor);
                 for(int b = 0; b < N_BUTTONS; b++){
@@ -45,34 +47,46 @@ int main(){
 
         //Drives to nest in que if not waiting for the door
         if(time(&currentTime) >= startCountDoor + 3){ 
-            if(*ptrToHead != NULL && elev.currentFloor == (*ptrToHead)->floorLevel){
-                removeFromQue(elev.currentFloor);
-            }
-            driveElevator(&elev);
+            driveElevator(&elev, stopWasActive);
+            elevio_doorOpenLamp(0);
+            stopWasActive = 0;
         }
         
         for(int f = 0; f < N_FLOORS; f++){
             for(int b = 0; b < N_BUTTONS; b++){
                 int btnPressed = elevio_callButton(f, b);
-                if(btnPressed){
+                if(btnPressed && !elevio_stopButton()){
                     MotorDirection dir = buttonTypeToDir(b, f, &elev);
                     changeButtonandLightStatus(f, b, 1, &elev);
-                    addToQue(f,dir,elev.currentFloor);
+                    if(time(&currentTime) <= startCountDoor + 3 &&  f == elev.currentFloor){
+
+                    }
+                    else{
+                        addToQue(f,dir,elev.currentFloor);
+                    }            
                 }
             }
         }
 
         if(elevio_stopButton()){
             elevio_motorDirection(DIRN_STOP);
+            elevio_stopLamp(1);
+            stopWasActive = 1;
+            if(elevio_floorSensor != -1){
+                elevio_doorOpenLamp(1);
+            }
+            time(&stopButtonTime);
             time(&startCountDoor);
+            clearQue();
         }
+        if(time(&currentTime) >= stopButtonTime + 0.000001){
+            elevio_stopLamp(0);
+        }
+
 
         //Obstruction light
         if(elevio_obstruction()){
-            elevio_stopLamp(1);
             time(&startCountDoor); //Is this according to spec? now it is waiting three seconds after obstruction
-        } else {
-            elevio_stopLamp(0);
         }
 
         updateCurrentFloor(&elev);
