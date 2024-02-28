@@ -11,7 +11,6 @@ void changeButtonandLightStatus(int floor, ButtonType type, int status, Elevator
     elevio_buttonLamp(floor, type, status);
     if(type == DIRN_UP){
         elev->upButtons[floor].status = status;
-        printf("Butoon activated %d\n", type);
         return;
     }
     else if(type == DIRN_UP){
@@ -67,19 +66,16 @@ Elevator initializeElevator(){
     return elevator;
 }
 
-void driveElevator(Elevator* elev){
-    //printf("Elevator running, current floor: %d\n", elev.currentFloor);
+void driveElevator(Elevator* elev, int stopWasActive){
     if((*ptrToHead) == NULL){
         elevio_motorDirection(DIRN_STOP);
         return;
     }
-    if((*ptrToHead)->floorLevel > elev->currentFloor ){
-        printf("Running elevator upwards\n");
+    if((*ptrToHead)->floorLevel > elev->currentFloor || stopWasActive){
         elevio_motorDirection(DIRN_UP);
         return;
     }
     if ((*ptrToHead)->floorLevel < elev->currentFloor){
-        printf("Running elevator down\n");
         elevio_motorDirection(DIRN_DOWN);
     } 
     /*
