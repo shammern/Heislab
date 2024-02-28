@@ -58,10 +58,7 @@ int main(){
                 if(btnPressed && !elevio_stopButton()){
                     MotorDirection dir = buttonTypeToDir(b, f, &elev);
                     changeButtonandLightStatus(f, b, 1, &elev);
-                    if(time(&currentTime) <= startCountDoor + 3 &&  f == elev.currentFloor){
-
-                    }
-                    else{
+                    if(!(   time(&currentTime) <= startCountDoor + 3 &&  f == elev.currentFloor )){
                         addToQue(f,dir,elev.currentFloor);
                     }            
                 }
@@ -92,17 +89,5 @@ int main(){
         updateCurrentFloor(&elev);
         elevio_floorIndicator(elev.currentFloor);
     }
-    
-
-
-
-    /*
-    while(1){
-
-
-    
-    //freeMemory(&elev);
-    return 0;
-    */
 }
 

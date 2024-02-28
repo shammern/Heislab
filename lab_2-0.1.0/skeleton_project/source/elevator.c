@@ -9,7 +9,7 @@ void updateCurrentFloor(Elevator* elev){
 
 void changeButtonandLightStatus(int floor, ButtonType type, int status, Elevator* elev){
     elevio_buttonLamp(floor, type, status);
-    if(type == DIRN_UP){
+    if(type == DIRN_UP){ //TODO, dead code?
         elev->upButtons[floor].status = status;
         return;
     }
@@ -20,7 +20,7 @@ void changeButtonandLightStatus(int floor, ButtonType type, int status, Elevator
 }
 
 Button initializeButton(ButtonType type){
-    Button button;
+    Button button;//TODO, dead code?
     button.type = type;
     button.status = 0;
     return button;
@@ -28,10 +28,6 @@ Button initializeButton(ButtonType type){
 
 Elevator initializeElevator(){
     Elevator elevator;
-
-
-    //elevator.upButtons = malloc(sizeof(Button)*(N_FLOORS));
-    //elevator.downButtons = malloc(sizeof(Button)*(N_FLOORS)); //Allocates extra slots, but helps us avoid offset in button order
 
     elevator.upButtons[0] = initializeButton(BUTTON_HALL_UP);
     elevator.downButtons[N_FLOORS-1] = initializeButton(BUTTON_HALL_DOWN);
