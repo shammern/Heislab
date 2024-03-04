@@ -80,18 +80,21 @@ void driveElevator(Elevator* elev, MotorDirection *prevDirection, int *prevStopp
     if ((*ptrToHead)->floorLevel < elev->currentFloor){
         prevStopped = 0;
         elevio_motorDirection(DIRN_DOWN);
+        return;
     } 
 
     if(*prevDirection == DIRN_UP){
         elevio_motorDirection(DIRN_UP);
         *prevDirection = DIRN_STOP;
         prevStopped = 0;
+        return;
     }
 
     if(*prevDirection == DIRN_DOWN){
         elevio_motorDirection(DIRN_DOWN);
         *prevDirection = DIRN_STOP;
         prevStopped = 0;
+        return;
     }
 };
 

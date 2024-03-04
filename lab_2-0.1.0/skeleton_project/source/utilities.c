@@ -39,12 +39,13 @@ void controllingAllButtonsExecuteActive(Elevator* elev, int stoppedAtFloor){
         if(btnPressed && !elevio_stopButton()){
             MotorDirection dir = buttonTypeToDir(BUTTON_CAB, f, &elev);
             changeButtonandLightStatus(f, BUTTON_CAB, 1, elev);
-            if(stoppedAtFloor){
-                addCabinOverrideFirstQue(f, dir, elev->currentFloor);
-            }
-            else{
-                addToQue(f,dir,elev->currentFloor); 
-            }    
+            addToQue(f,dir,elev->currentFloor); 
+            // if(stoppedAtFloor){
+            //     addCabinOverrideFirstQue(f, dir, elev->currentFloor);
+            // }
+            // else{
+            //     addToQue(f,dir,elev->currentFloor); 
+            // }    
             //TODO: This is not this easy!! retry    
         }
     }
