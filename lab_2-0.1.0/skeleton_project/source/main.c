@@ -42,7 +42,7 @@ int main(){
             time(&startCountDoor);
             elevio_doorOpenLamp(1);
             elevio_motorDirection(DIRN_STOP);
-            //updateCurrentFloor(&elev);
+            updateCurrentFloor(&elev);
             //removeFromQue(elev.currentFloor);
             for(int b = 0; b < N_BUTTONS; b++){
                 changeButtonandLightStatus(elev.currentFloor, b, 0, &elev);
