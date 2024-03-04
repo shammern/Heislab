@@ -67,7 +67,7 @@ void insertInMidQue(Node* new, MotorDirection motorDir){
 /// @param currentLevel The last activated sensor, elevator will be between here and floor given by direction
 void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
 
-    //TODO, add functionality for cabinbuttons
+ 
     Node* new = (Node*)malloc(sizeof(Node));
     new->floorLevel = pushedLevel;
     new->direction = dirPushed;
@@ -82,6 +82,7 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
     if(alreadyInQue(new, iterationNode)){
         return;
     }
+
     
     MotorDirection motorDir = iterationNode->direction;
 
@@ -162,6 +163,30 @@ void clearQue(){
         free(iterationNode);
         iterationNode = nextIt;
     }
+}
+
+void addCabinOverrideFirstQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
+    if(dirPushed == (*ptrToHead)->direction){
+        Node* new = (Node*)malloc(sizeof(Node));
+        new->floorLevel = pushedLevel;
+        new->direction = dirPushed;
+        new->next = NULL;
+        Node* iterationNode = (*ptrToHead);
+        
+        if(*ptrToHead == NULL){
+            *ptrToHead = new;
+            return;
+        }else{
+            new->next = (*ptrToHead);
+            (*ptrToHead) = new;
+            return;
+        }
+                    
+    }
+    else{
+        addToQue(pushedLevel, dirPushed, currentLevel);
+    }
+    //To be activated if at correct direction compared to previous direction, only used at standing still
 }
 
 ///Logic used in derivation of code:

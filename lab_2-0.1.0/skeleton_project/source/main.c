@@ -43,7 +43,6 @@ int main(){
             elevio_doorOpenLamp(1);
             elevio_motorDirection(DIRN_STOP);
             updateCurrentFloor(&elev);
-            //removeFromQue(elev.currentFloor);
             for(int b = 0; b < N_BUTTONS; b++){
                 changeButtonandLightStatus(elev.currentFloor, b, 0, &elev);
                 elevio_buttonLamp(elev.currentFloor, b, 0);
@@ -65,8 +64,10 @@ int main(){
             }
         }
         
+        ///Checking all buttons
         for(int f = 0; f < N_FLOORS; f++){
-            for(int b = 0; b < N_BUTTONS; b++){
+            //For up and down-button
+            for(int b = 0; b < N_BUTTONS -1; b++){
                 int btnPressed = elevio_callButton(f, b);
                 if(btnPressed && !elevio_stopButton()){
                     MotorDirection dir = buttonTypeToDir(b, f, &elev);
@@ -74,8 +75,22 @@ int main(){
                     addToQue(f,dir,elev.currentFloor);          
                 }
             }
+            //Forcabin-button
+            int btnPressed = elevio_callButton(f, BUTTON_CAB);
+            if(btnPressed && !elevio_stopButton()){
+                MotorDirection dir = buttonTypeToDir(BUTTON_CAB, f, &elev);
+                changeButtonandLightStatus(f, BUTTON_CAB, 1, &elev);
+                if(stoppedAtFloor){
+                    addCabinOverrideFirstQue(f, dir, elev.currentFloor);
+                }
+                else{
+                    addToQue(f,dir,elev.currentFloor); 
+                }        
+            }
         }
 
+
+        //At stop-button pressed
         if(elevio_stopButton()){
             elevio_motorDirection(DIRN_STOP);
             prevStopped = 1;
@@ -97,12 +112,12 @@ int main(){
                 }
             }
         }
-
+        //Resettingg stoplight
         if(time(&currentTime) >= stopButtonTime + 0.000001){
             elevio_stopLamp(0);            
         }
 
-        //Obstruction light
+        //Obstruction leads to doortimer reset 
         if(elevio_obstruction()){
             time(&startCountDoor); //Is this according to spec? now it is waiting three seconds after obstruction
         }
