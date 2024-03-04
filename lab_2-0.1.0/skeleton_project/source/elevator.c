@@ -82,15 +82,15 @@ void driveElevator(Elevator* elev, MotorDirection *prevDirection, int *prevStopp
         elevio_motorDirection(DIRN_DOWN);
     } 
 
-    if(prevDirection == DIRN_UP){
+    if(*prevDirection == DIRN_UP){
         elevio_motorDirection(DIRN_UP);
-        prevDirection = DIRN_STOP;
+        *prevDirection = DIRN_STOP;
         prevStopped = 0;
     }
 
-    if(prevDirection == DIRN_DOWN){
+    if(*prevDirection == DIRN_DOWN){
         elevio_motorDirection(DIRN_DOWN);
-        prevDirection = DIRN_STOP;
+        *prevDirection = DIRN_STOP;
         prevStopped = 0;
     }
 };

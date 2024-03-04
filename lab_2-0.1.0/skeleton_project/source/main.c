@@ -46,7 +46,8 @@ int main(){
             //removeFromQue(elev.currentFloor);
             for(int b = 0; b < N_BUTTONS; b++){
                 changeButtonandLightStatus(elev.currentFloor, b, 0, &elev);
-            }  
+                elevio_buttonLamp(elev.currentFloor, b, 0);
+            }
         }
 
         //Drives to nest in que if not waiting for the door
@@ -100,7 +101,6 @@ int main(){
         if(time(&currentTime) >= stopButtonTime + 0.000001){
             elevio_stopLamp(0);            
         }
-
 
         //Obstruction light
         if(elevio_obstruction()){
