@@ -66,50 +66,33 @@ Elevator initializeElevator(){
     return elevator;
 }
 
-void driveElevator(Elevator* elev, int stopWasActive){
+void driveElevator(Elevator* elev, MotorDirection *prevDirection, int *prevStopped){
+
     if((*ptrToHead) == NULL){
         elevio_motorDirection(DIRN_STOP);
         return;
     }
-    if((*ptrToHead)->floorLevel > elev->currentFloor || stopWasActive){
+    if((*ptrToHead)->floorLevel > elev->currentFloor){
+        prevStopped = 0;
         elevio_motorDirection(DIRN_UP);
         return;
     }
     if ((*ptrToHead)->floorLevel < elev->currentFloor){
+        prevStopped = 0;
         elevio_motorDirection(DIRN_DOWN);
     } 
-    /*
-    //Code for running elevator upwards
-    if(destination > elev.currentFloor){
-        elev.direction = destination;
+
+    if(prevDirection == DIRN_UP){
         elevio_motorDirection(DIRN_UP);
-        while(elev -> currentFloor != destination){
-            updateCurrentFloor(elev);
-            if(elevio_stopButton()){
-                elevio_motorDirection(DIRN_STOP);
-            break;
-            }
-        }
-        elevio_motorDirection(DIRN_STOP); 
-    
+        prevDirection = DIRN_STOP;
+        prevStopped = 0;
     }
-    
-    //Code for running elevator downwards
-    if(destination < elev -> currentFloor){
-        updateElevatorDirection(elev, DIRN_DOWN);
+
+    if(prevDirection == DIRN_DOWN){
         elevio_motorDirection(DIRN_DOWN);
-        while(elev -> currentFloor != destination){
-            updateCurrentFloor(elev);
-            if(elevio_stopButton()){
-                elevio_motorDirection(DIRN_STOP);
-            break;
-            }
-        }
-        elevio_motorDirection(DIRN_STOP);    
+        prevDirection = DIRN_STOP;
+        prevStopped = 0;
     }
-        
-    printf("Elevator has arrived at your destinationfloor: %d\n", destination);
-    */
 };
 
 void freeMemory(Elevator *elev){

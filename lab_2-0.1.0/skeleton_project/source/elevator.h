@@ -19,7 +19,7 @@ typedef struct{
     int volatile currentFloor;
 }Elevator;
 
-void driveElevator(Elevator* elev, int stopWasActive);
+void driveElevator(Elevator* elev, MotorDirection *prevDirection, int *prevStopped);
 void updateCurrentFloor(Elevator* elev);
 void changeButtonandLightStatus(int floor, ButtonType type,int status, Elevator* elev);
 

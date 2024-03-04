@@ -20,4 +20,5 @@ void addToQue(int pushedLevel, MotorDirection dirPushed, int currentLevel);
 void addLastInQue(Node* new, Node* prev);
 void insertInMidQue(Node* new, MotorDirection motorDir);
 void removeFromQue(int removeLevel);
+int alreadyInQue(Node* new, Node* next);
 void clearQue(); 
