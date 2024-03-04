@@ -9,22 +9,22 @@ void updateCurrentFloor(Elevator* elev){
 
 void changeButtonandLightStatus(int floor, ButtonType type, int status, Elevator* elev){
     elevio_buttonLamp(floor, type, status);
-    if(type == DIRN_UP){
-        elev->upButtons[floor].status = status;
-        return;
-    }
-    else if(type == DIRN_UP){
-        elev->downButtons[floor].status = status;
-        return;
-    }
+    // if(type == DIRN_UP){
+    //     elev->upButtons[floor].status = status;
+    //     return;
+    // }
+    // else if(type == DIRN_UP){
+    //     elev->downButtons[floor].status = status;
+    //     return;
+    // }
 }
 
-Button initializeButton(ButtonType type){
-    Button button;
-    button.type = type;
-    button.status = 0;
-    return button;
-}
+// Button initializeButton(ButtonType type){
+//     Button button;
+//     button.type = type;
+//     button.status = 0;
+//     return button;
+// }
 
 Elevator initializeElevator(){
     Elevator elevator;
@@ -33,14 +33,14 @@ Elevator initializeElevator(){
     //elevator.upButtons = malloc(sizeof(Button)*(N_FLOORS));
     //elevator.downButtons = malloc(sizeof(Button)*(N_FLOORS)); //Allocates extra slots, but helps us avoid offset in button order
 
-    elevator.upButtons[0] = initializeButton(BUTTON_HALL_UP);
-    elevator.downButtons[N_FLOORS-1] = initializeButton(BUTTON_HALL_DOWN);
+    //elevator.upButtons[0] = initializeButton(BUTTON_HALL_UP);
+    //elevator.downButtons[N_FLOORS-1] = initializeButton(BUTTON_HALL_DOWN);
 
-    for(int i = 1; i < N_FLOORS-2; i++){
-        elevator.cabinButtons[i] = initializeButton(BUTTON_CAB);
-        elevator.upButtons[i] = initializeButton(BUTTON_HALL_UP);
-        elevator.downButtons[i] = initializeButton(BUTTON_HALL_DOWN);
-    }
+    // for(int i = 1; i < N_FLOORS-2; i++){
+    //     elevator.cabinButtons[i] = initializeButton(BUTTON_CAB);
+    //     elevator.upButtons[i] = initializeButton(BUTTON_HALL_UP);
+    //     elevator.downButtons[i] = initializeButton(BUTTON_HALL_DOWN);
+    // }
 
     //Takes care of out initiating routine
     while(1){
@@ -60,7 +60,7 @@ Elevator initializeElevator(){
     
 
     elevator.currentFloor = elevio_floorSensor();
-    elevator.direction = DIRN_STOP;
+    //elevator.direction = DIRN_STOP;
     printf("Elevator initilized, current floor: %d\n", elevator.currentFloor);
     
     return elevator;
@@ -95,7 +95,7 @@ void driveElevator(Elevator* elev, MotorDirection *prevDirection, int *prevStopp
     }
 };
 
-void freeMemory(Elevator *elev){
-    free(elev->upButtons);
-    free(elev->downButtons);
-}
+// void freeMemory(Elevator *elev){
+//     free(elev->upButtons);
+//     free(elev->downButtons);
+// }

@@ -21,6 +21,7 @@ int main(){
     time_t stopButtonTime;
     time(&startCountDoor);
     
+    //State variables
     int stoppedAtFloor = 1;
     int prevStopped = 1;
 
@@ -37,6 +38,7 @@ int main(){
     while(1){
         //At destination
         if(*ptrToHead != NULL && elevio_floorSensor() == (*ptrToHead)->floorLevel && !stoppedAtFloor){
+            
             stoppedAtFloor = 1;
             prevStopped = 1;
             time(&startCountDoor);
@@ -55,6 +57,8 @@ int main(){
                 driveElevator(&elev, &prevDirection, &prevStopped);
             }
             elevio_doorOpenLamp(0);
+
+            //Removing from que and turning off buttonlights at departure
             if(stoppedAtFloor){
                 removeFromQue(elev.currentFloor);
                 stoppedAtFloor = 0;
@@ -66,7 +70,6 @@ int main(){
         
         ///Checking all buttons
         controllingAllButtonsExecuteActive(&elev,stoppedAtFloor);
-
 
         //At stop-button pressed
         if(elevio_stopButton()){
@@ -97,12 +100,12 @@ int main(){
 
         //Obstruction leads to doortimer reset 
         if(elevio_obstruction()){
-            time(&startCountDoor); //Is this according to spec? now it is waiting three seconds after obstruction
+            time(&startCountDoor); 
         }
 
+        //Updating the floor at valid sensor input
         updateCurrentFloor(&elev);
         elevio_floorIndicator(elev.currentFloor);
     }
-    
 }
 
