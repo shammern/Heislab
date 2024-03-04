@@ -65,29 +65,7 @@ int main(){
         }
         
         ///Checking all buttons
-        for(int f = 0; f < N_FLOORS; f++){
-            //For up and down-button
-            for(int b = 0; b < N_BUTTONS -1; b++){
-                int btnPressed = elevio_callButton(f, b);
-                if(btnPressed && !elevio_stopButton()){
-                    MotorDirection dir = buttonTypeToDir(b, f, &elev);
-                    changeButtonandLightStatus(f, b, 1, &elev);
-                    addToQue(f,dir,elev.currentFloor);          
-                }
-            }
-            //Forcabin-button
-            int btnPressed = elevio_callButton(f, BUTTON_CAB);
-            if(btnPressed && !elevio_stopButton()){
-                MotorDirection dir = buttonTypeToDir(BUTTON_CAB, f, &elev);
-                changeButtonandLightStatus(f, BUTTON_CAB, 1, &elev);
-                if(stoppedAtFloor){
-                    addCabinOverrideFirstQue(f, dir, elev.currentFloor);
-                }
-                else{
-                    addToQue(f,dir,elev.currentFloor); 
-                }        
-            }
-        }
+        controllingAllButtonsExecuteActive(&elev,stoppedAtFloor);
 
 
         //At stop-button pressed
