@@ -150,7 +150,6 @@ void removeFromQue(int removeLevel){
             }     
         }
     }
-
 }
 
 /// @brief Deletes all elements in que (And frees memory)
