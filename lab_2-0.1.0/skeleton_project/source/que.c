@@ -165,13 +165,27 @@ void clearQue(){
     }
 }
 
-void addCabinOverrideFirstQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
+void addCabinOverrideFirstQue(int pushedLevel, MotorDirection dirPushed, int currentLevel, int* numberPushedOnFloor){
     if(dirPushed == (*ptrToHead)->direction){
         Node* new = (Node*)malloc(sizeof(Node));
         new->floorLevel = pushedLevel;
         new->direction = dirPushed;
         new->next = NULL;
         Node* iterationNode = (*ptrToHead);
+
+        for(int i = 0; i < numberPushedOnFloor; i++){
+            if(iterationNode->next != NULL){
+                if( (dirPushed == DIRN_DOWN && iterationNode->floorLevel < iterationNode->next->floorLevel) 
+                || (dirPushed == DIRN_UP && iterationNode->floorLevel > iterationNode->next->floorLevel) ){
+                    iterationNode = iterationNode->next;
+                }
+                else{
+                    break;
+                }
+                
+            }
+        } 
+        numberPushedOnFloor++;
         
         if(*ptrToHead == NULL){
             *ptrToHead = new;

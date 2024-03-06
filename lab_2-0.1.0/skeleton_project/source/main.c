@@ -24,6 +24,7 @@ int main(){
     //State variables
     int stoppedAtFloor = 1;
     int prevStopped = 1;
+    int numberPushedOnFloor = 0;
 
     MotorDirection prevDirection = DIRN_STOP;
 
@@ -41,6 +42,7 @@ int main(){
             
             stoppedAtFloor = 1;
             prevStopped = 1;
+            numberPushedOnFloor = 0;
             time(&startCountDoor);
             elevio_doorOpenLamp(1);
             elevio_motorDirection(DIRN_STOP);
@@ -69,7 +71,7 @@ int main(){
         }
         
         ///Checking all buttons
-        controllingAllButtonsExecuteActive(&elev,stoppedAtFloor);
+        controllingAllButtonsExecuteActive(&elev,stoppedAtFloor, &numberPushedOnFloor);
 
         //At stop-button pressed
         if(elevio_stopButton()){
