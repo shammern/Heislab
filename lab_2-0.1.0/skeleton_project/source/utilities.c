@@ -14,7 +14,7 @@ MotorDirection buttonTypeToDir(ButtonType type, int floorPushed, Elevator* elev)
         break;
 
     case BUTTON_CAB:
-        dir = elev->currentFloor < floorPushed ? DIRN_UP : DIRN_DOWN;
+        dir = elev->currentFloor < floorPushed ? DIRN_DOWN : DIRN_UP; //TODO, start bugtesting by changing here
         break;
 
     default:
