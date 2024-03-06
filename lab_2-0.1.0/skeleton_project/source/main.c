@@ -94,7 +94,7 @@ int main(){
                 }
             }
         }
-        //Resettingg stoplight
+        //Resetting stoplight
         if(time(&currentTime) >= stopButtonTime + 0.000001){
             elevio_stopLamp(0);            
         }
