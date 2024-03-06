@@ -37,7 +37,7 @@ void controllingAllButtonsExecuteActive(Elevator* elev, int stoppedAtFloor, int*
         //For cabin-button
         int btnPressed = elevio_callButton(f, BUTTON_CAB);
         if(btnPressed && !elevio_stopButton()){
-            MotorDirection dir = buttonTypeToDir(BUTTON_CAB, f, &elev);
+            MotorDirection dir = buttonTypeToDir(BUTTON_CAB, f, elev);
             changeButtonandLightStatus(f, BUTTON_CAB, 1, elev);
             //addToQue(f,dir,elev->currentFloor); 
             if(stoppedAtFloor){

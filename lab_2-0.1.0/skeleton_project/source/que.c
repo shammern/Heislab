@@ -173,7 +173,7 @@ void addCabinOverrideFirstQue(int pushedLevel, MotorDirection dirPushed, int cur
         new->next = NULL;
         Node* iterationNode = (*ptrToHead);
 
-        for(int i = 0; i < numberPushedOnFloor; i++){
+        for(int i = 0; i < *numberPushedOnFloor; i++){
             if(iterationNode->next != NULL){
                 if( (dirPushed == DIRN_DOWN && iterationNode->floorLevel < iterationNode->next->floorLevel) 
                 || (dirPushed == DIRN_UP && iterationNode->floorLevel > iterationNode->next->floorLevel) ){
@@ -181,8 +181,7 @@ void addCabinOverrideFirstQue(int pushedLevel, MotorDirection dirPushed, int cur
                 }
                 else{
                     break;
-                }
-                
+                }   
             }
         } 
         numberPushedOnFloor++;

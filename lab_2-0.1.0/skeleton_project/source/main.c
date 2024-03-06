@@ -33,7 +33,6 @@ int main(){
 
     Elevator elev = initializeElevator();
 
-    Node** test = ptrToHead;
 
 
     while(1){
