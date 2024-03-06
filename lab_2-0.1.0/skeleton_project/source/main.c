@@ -24,6 +24,7 @@ int main(){
     //State variables
     int stoppedAtFloor = 1;
     int prevStopped = 1;
+    int numberPushedOnFloor = 0;
 
     MotorDirection prevDirection = DIRN_STOP;
 
@@ -32,7 +33,6 @@ int main(){
 
     Elevator elev = initializeElevator();
 
-    Node** test = ptrToHead;
 
 
     while(1){
@@ -41,6 +41,7 @@ int main(){
             
             stoppedAtFloor = 1;
             prevStopped = 1;
+            numberPushedOnFloor = 0;
             time(&startCountDoor);
             elevio_doorOpenLamp(1);
             elevio_motorDirection(DIRN_STOP);
@@ -69,7 +70,7 @@ int main(){
         }
         
         ///Checking all buttons
-        controllingAllButtonsExecuteActive(&elev,stoppedAtFloor);
+        controllingAllButtonsExecuteActive(&elev,stoppedAtFloor, &numberPushedOnFloor);
 
         //At stop-button pressed
         if(elevio_stopButton()){
@@ -93,7 +94,7 @@ int main(){
                 }
             }
         }
-        //Resettingg stoplight
+        //Resetting stoplight
         if(time(&currentTime) >= stopButtonTime + 0.000001){
             elevio_stopLamp(0);            
         }

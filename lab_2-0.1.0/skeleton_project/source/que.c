@@ -150,7 +150,6 @@ void removeFromQue(int removeLevel){
             }     
         }
     }
-
 }
 
 /// @brief Deletes all elements in que (And frees memory)
@@ -165,13 +164,27 @@ void clearQue(){
     }
 }
 
-void addCabinOverrideFirstQue(int pushedLevel, MotorDirection dirPushed, int currentLevel){
-    if(dirPushed == (*ptrToHead)->direction){
+void addCabinOverrideFirstQue(int pushedLevel, MotorDirection dirPushed, int currentLevel, int* numberPushedOnFloor){
+    if((*numberPushedOnFloor == 0 && (dirPushed != (*ptrToHead)->direction)) 
+    || (*numberPushedOnFloor != 0 && (dirPushed == (*ptrToHead)->direction))){
         Node* new = (Node*)malloc(sizeof(Node));
         new->floorLevel = pushedLevel;
         new->direction = dirPushed;
         new->next = NULL;
         Node* iterationNode = (*ptrToHead);
+
+        for(int i = 0; i < *numberPushedOnFloor; i++){
+            if(iterationNode->next != NULL){
+                if( (dirPushed == DIRN_DOWN && iterationNode->floorLevel < iterationNode->next->floorLevel) 
+                || (dirPushed == DIRN_UP && iterationNode->floorLevel > iterationNode->next->floorLevel) ){
+                    iterationNode = iterationNode->next;
+                }
+                else{
+                    break;
+                }   
+            }
+        } 
+        *numberPushedOnFloor = *numberPushedOnFloor +1;
         
         if(*ptrToHead == NULL){
             *ptrToHead = new;

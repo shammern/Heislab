@@ -14,7 +14,7 @@ MotorDirection buttonTypeToDir(ButtonType type, int floorPushed, Elevator* elev)
         break;
 
     case BUTTON_CAB:
-        dir = elev->currentFloor < floorPushed ? DIRN_UP : DIRN_DOWN;
+        dir = elev->currentFloor < floorPushed ? DIRN_DOWN : DIRN_UP; //TODO, start bugtesting by changing here, changed 06.03.24
         break;
 
     default:
@@ -23,7 +23,7 @@ MotorDirection buttonTypeToDir(ButtonType type, int floorPushed, Elevator* elev)
     return dir;    
 }
 
-void controllingAllButtonsExecuteActive(Elevator* elev, int stoppedAtFloor){
+void controllingAllButtonsExecuteActive(Elevator* elev, int stoppedAtFloor, int* numberPushedOnFloor){
     for(int f = 0; f < N_FLOORS; f++){
         //For up and down-button
         for(int b = 0; b < N_BUTTONS -1; b++){
@@ -37,16 +37,15 @@ void controllingAllButtonsExecuteActive(Elevator* elev, int stoppedAtFloor){
         //For cabin-button
         int btnPressed = elevio_callButton(f, BUTTON_CAB);
         if(btnPressed && !elevio_stopButton()){
-            MotorDirection dir = buttonTypeToDir(BUTTON_CAB, f, &elev);
+            MotorDirection dir = buttonTypeToDir(BUTTON_CAB, f, elev);
             changeButtonandLightStatus(f, BUTTON_CAB, 1, elev);
-            addToQue(f,dir,elev->currentFloor); 
-            // if(stoppedAtFloor){
-            //     addCabinOverrideFirstQue(f, dir, elev->currentFloor);
-            // }
-            // else{
-            //     addToQue(f,dir,elev->currentFloor); 
-            // }    
-            //TODO: This is not this easy!! retry    
+            //addToQue(f,dir,elev->currentFloor); 
+            if(stoppedAtFloor){
+                addCabinOverrideFirstQue(f, dir, elev->currentFloor, numberPushedOnFloor);
+            }
+            else{
+                addToQue(f,dir,elev->currentFloor); 
+            }    
         }
     }
 }
